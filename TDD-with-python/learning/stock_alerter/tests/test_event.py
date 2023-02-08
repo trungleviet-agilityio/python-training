@@ -15,5 +15,5 @@ class EventTest(unittest.TestCase):
     listener = mock.Mock()
     event = Event()
     event.connect(listener)
-    a = event.fire(5, shape="square")
+    event.fire(5, shape="square")
     listener.assert_has_calls([mock.call(5, shape="square")])
