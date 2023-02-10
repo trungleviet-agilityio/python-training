@@ -1,3 +1,4 @@
+# import library for binary search
 import smtplib
 import unittest
 from unittest import mock
@@ -9,6 +10,8 @@ class MessageMatcher:
     def __init__(self, expected):
         self.expected = expected
 
+    # checks the key components of the email message
+    # with the configured expected message
     def __eq__(self, other):
         return self.expected["Subject"] == other["Subject"] and \
             self.expected["From"] == other["From"] and \
@@ -32,10 +35,13 @@ class EmailActionTest(unittest.TestCase):
         self.mock_smtp = self.mock_smtp_class.return_value
         self.action = EmailAction(to="siddharta@silverstripesoftware.com")
 
+    # takes a stock message and checks if the email is sent to the expected server
     def test_email_is_sent_to_the_right_server(self):
         self.action.execute("MSFT has crossed $10 price level")
         self.mock_smtp_class.assert_called_with("email.stocks.com")
 
+    # test to confirm that the connection closes after an email is sent
+    # compares server calls with expectations
     def test_connection_closed_after_sending_mail(self):
         self.action.execute("MSFT has crossed $10 price level")
         self.mock_smtp.send_message.assert_called_with(mock.ANY)
@@ -44,6 +50,7 @@ class EmailActionTest(unittest.TestCase):
             mock.call.send_message(mock.ANY),
             mock.call.quit()])
 
+    # ensures that the connection closes even if sending the message throws any error
     def test_connection_closed_if_send_gives_error(self):
         self.mock_smtp.send_message.side_effect = smtplib.SMTPServerDisconnected()
         try:
@@ -52,12 +59,14 @@ class EmailActionTest(unittest.TestCase):
             pass
         self.assertTrue(self.mock_smtp.quit.called)
 
+    # checks if the email is sent with the expected subject line
     def test_email_is_sent_with_the_right_subject(self):
         self.action.execute("MSFT has crossed $10 price level")
         call_args, _ = self.mock_smtp.send_message.call_args
         sent_message = call_args[0]
         self.assertEqual("New Stock Alert", sent_message["Subject"])
 
+    # checks if the entire email is sent when the action is executed
     def test_email_is_sent_when_action_is_executed(self):
         expected_message = {
             "Subject": "New Stock Alert",

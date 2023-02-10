@@ -10,8 +10,9 @@ class StockSignal(Enum):
     neutral = 0
     sell = -1
 
-
+# The Stock class is used to store the stock symbol along with its associated prices.
 class Stock:
+    # THe LONG_TERM_TIMESPAN and SHORT_TERM_TIMESPAN define the time intervals for the Long Term and Short Term Moving Averages.
     LONG_TERM_TIMESPAN = 10
     SHORT_TERM_TIMESPAN = 5
 
@@ -20,6 +21,7 @@ class Stock:
         self.history = TimeSeries()
         self.updated = Event()
 
+    # The _price method returns the current price of the Stock
     @property
     def price(self):
         """Returns the current price of the Stock
@@ -55,6 +57,7 @@ class Stock:
         except IndexError:
             return None
 
+    # The update method updates the stock with the price at the given timestamp
     def update(self, timestamp, price):
         """Updates the stock with the price at the given timestamp
 

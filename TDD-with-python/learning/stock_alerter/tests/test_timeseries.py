@@ -5,6 +5,7 @@ from ..timeseries import TimeSeries
 
 
 class TimeSeriesTestCase(unittest.TestCase):
+    """Asserts that the list of prices matches the given TimeSeries instance."""
     def assert_has_price_history(self, price_list, series):
         for index, expected_price in enumerate(price_list):
             actual_price = series[index].value
@@ -14,6 +15,7 @@ class TimeSeriesTestCase(unittest.TestCase):
 
 
 class TimeSeriesEqualityTest(TimeSeriesTestCase):
+    """Tests that the TimeSeries class correctly stores and retrieves price history data."""
     def test_timeseries_price_history(self):
         series = TimeSeries()
         series.update(datetime(2014, 3, 10), 5)
