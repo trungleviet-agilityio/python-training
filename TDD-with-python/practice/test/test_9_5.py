@@ -9,10 +9,7 @@ import unittest
 
 def uses_all(word, required_letters):
     """Returns True if the given word uses all the required letters at least once."""
-    for letter in required_letters:
-        if letter not in word:
-            return False
-    return True
+    return set(required_letters).issubset(set(word))
 
 
 class TestUsesAll(unittest.TestCase):
@@ -21,12 +18,6 @@ class TestUsesAll(unittest.TestCase):
         # Set up any class-level resources here
         cls.vowels = 'aeiou'
         cls.vowels_and_y = 'aeiouy'
-
-    @classmethod
-    def tearDownClass(cls):
-        # Clean up any class-level resources here
-        cls.vowels = None
-        cls.vowels_and_y = None
 
     def test_required_letters_not_in_word(self):
         # Test that the function returns False when some required letters are not in the word

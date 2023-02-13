@@ -10,14 +10,11 @@ def uses_only(word, letters):
     """
     Returns True if the word contains only letters in the list, and False otherwise.
     """
-    word = word.lower()  # convert word to lowercase
-    letters = letters.lower()  # convert list of allowed letters to lowercase
-
-    """Returns True if the word contains only letters"""
-    for letter in word:
-        if letter not in letters:
-            return False
-    return True
+    word_set = set(word.lower())  # convert word to set of lowercase characters
+    # convert list of allowed letters to set of lowercase characters
+    letters_set = set(letters.lower())
+    # return True if word set is a subset of letters set
+    return word_set.issubset(letters_set)
 
 
 class TestUsesOnly(unittest.TestCase):

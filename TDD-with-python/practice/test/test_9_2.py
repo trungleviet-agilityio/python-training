@@ -48,7 +48,7 @@ class TestHasNoE(unittest.TestCase):
         """
         Test the case where the word contains the letter 'E' (uppercase).
         """
-        word = "Hello"
+        word = "HEllo"
         result = has_no_e(word)
         self.assertFalse(result, f"Expected False for word '{word}'")
 
