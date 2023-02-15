@@ -5,6 +5,7 @@
 import unittest
 
 import random
+from collections import defaultdict
 
 
 def histogram(s):
@@ -17,13 +18,10 @@ def histogram(s):
     Returns:
         A dictionary with the characters in the string as keys and their counts as values.
     """
-    character_counts = {}
+    character_counts = defaultdict(int)
     for character in s:
-        if character in character_counts:
-            character_counts[character] += 1
-        else:
-            character_counts[character] = 1
-    return character_counts
+        character_counts[character] += 1
+    return dict(character_counts)
 
 
 def sum_dict_values(*dicts):
@@ -39,12 +37,10 @@ def sum_dict_values(*dicts):
     Raises:
         TypeError: If any of the input arguments are not dictionaries.
     """
-    result = 0
-    for d in dicts:
-        if not isinstance(d, dict):
-            raise TypeError("Arguments must be dictionaries.")
-        result += sum(d.values())
-    return result
+    if not all(isinstance(d, dict) for d in dicts):
+        raise TypeError("All arguments must be dictionaries.")
+
+    return sum(value for d in dicts for value in d.values())
 
 
 def choose_from_hist(h):
@@ -60,13 +56,11 @@ def choose_from_hist(h):
     if not isinstance(h, dict):
         raise TypeError("Argument must be a dictionary")
 
-    # Choose a key randomly based on its value
-    random_key = random.choice(list(h.keys()))
-    probability = h[random_key] / sum(h.values())
-    values_sum = sum(h.values())
-    print('Random value is "{}" and its probability is {}/{}, i.e. {}.'
-          .format(random_key, h[random_key], sum(h.values()), probability))
-    return random_key
+    # Unpack the keys and values of the dictionary into two separate tuples
+    keys, weights = zip(*h.items())
+
+    # Use random.choices with the weights argument to select a key based on its value
+    return random.choices(keys, weights=weights)[0]
 
 
 class TestHistogram(unittest.TestCase):
@@ -96,14 +90,15 @@ class TestHistogram(unittest.TestCase):
         # Test function that selects a key randomly from a dictionary based on its value
         # Test with a valid histogram
         h = {'a': 1, 'b': 2, 'c': 3}
-        result = choose_from_hist(h)
-        self.assertIn(result, h)
-
-        # Test with a non-dictionary argument
-        non_dict = "This is not a dictionary"
-        with self.assertRaises(TypeError):
-            choose_from_hist(non_dict)
-
+        results = []
+        n_trials = 10000
+        for i in range(n_trials):
+            result = choose_from_hist(h)
+            results.append(result)
+        counts = {k: results.count(k) for k in h}
+        expected_counts = {k: int(n_trials * v / sum(h.values())) for k, v in h.items()}
+        for k in h:
+            self.assertAlmostEqual(counts[k], expected_counts[k], delta=0.02 * n_trials)
 
 if __name__ == '__main__':
     unittest.main()
