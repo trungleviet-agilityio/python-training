@@ -38,14 +38,14 @@ class TestUsesAll(unittest.TestCase):
         cases = [("onomatopoeia", self.vowels), ("queueing", self.vowels)]
         for word, required_letters in cases:
             with self.subTest(word=word, required_letters=required_letters):
-                self.assertTrue(uses_all(word, required_letters))
+                self.assertFalse(uses_all(word, required_letters))
 
     def test_vowels_and_y_in_word(self):
         # Test how many words are there that use all the vowels aeiouy
         cases = [("sequoia", self.vowels_and_y), ("buyout", self.vowels_and_y)]
         for word, required_letters in cases:
             with self.subTest(word=word, required_letters=required_letters):
-                self.assertTrue(uses_all(word, required_letters))
+                self.assertFalse(uses_all(word, required_letters))
 
     def test_some_vowels_missing(self):
         # Test that the function returns False when some required vowels are missing from the word

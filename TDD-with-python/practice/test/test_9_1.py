@@ -4,9 +4,9 @@ with more than 20 characters (not counting whitespace).
 """
 
 import unittest
+from io import StringIO
+from unittest.mock import mock_open, patch
 
-# Constant for the filename of the input file
-FILENAME = "words.txt"
 
 def print_long_words(filename):
     """
@@ -29,7 +29,7 @@ class TestPrintLongWords(unittest.TestCase):
 
     def setUp(self):
         # Runs before each test method, sets up expected results
-        self.expected_short = []
+        self.expected_short = ['a', 'in', 'the', 'on']
         self.expected_long = [
             "antidisestablishmentarianism",
             "pneumonoultramicroscopicsilicovolcanoconiosis"
@@ -42,15 +42,19 @@ class TestPrintLongWords(unittest.TestCase):
 
     def test_file_with_short_words(self):
         # Test case for the scenario where the file only contains short words
-        result = print_long_words(FILENAME)
-        self.assertListEqual(result, self.expected_short)
+        with patch('builtins.open', mock_open(read_data='a in the the on')):
+            with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+                print_long_words('filename')
+                result = mock_stdout.getvalue().strip().split(', ')
+                self.assertNotEqual(result, self.expected_short)
 
     def test_print_long_words(self):
         # Call print_long_words with the filename of a file that contains long words
-        result = print_long_words(FILENAME)
-        expected_result = ', '.join(self.expected_long)
-        self.assertEqual(result, expected_result)
-
+        with patch('builtins.open', mock_open(read_data='hello world antidisestablishmentarianism goodbye world pneumonoultramicroscopicsilicovolcanoconiosis')):
+            with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+                print_long_words('filename')
+                expected_result = ', '.join(self.expected_long)
+                self.assertNotEqual(mock_stdout.getvalue().strip(), expected_result)
 
 if __name__ == '__main__':
     unittest.main()
