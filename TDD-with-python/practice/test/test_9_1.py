@@ -44,9 +44,10 @@ class TestPrintLongWords(unittest.TestCase):
         # Test case for the scenario where the file only contains short words
         with patch('builtins.open', mock_open(read_data='a in the the on')):
             with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
-                print_long_words('filename')
-                result = mock_stdout.getvalue().strip().split(', ')
-                self.assertNotEqual(result, self.expected_short)
+                result = print_long_words('filename')
+                expected_result = ''
+                self.assertEqual(mock_stdout.getvalue().strip(), expected_result)
+                self.assertEqual(result, self.expected_short)
 
     def test_print_long_words(self):
         # Call print_long_words with the filename of a file that contains long words
@@ -55,6 +56,7 @@ class TestPrintLongWords(unittest.TestCase):
                 print_long_words('filename')
                 expected_result = ', '.join(self.expected_long)
                 self.assertNotEqual(mock_stdout.getvalue().strip(), expected_result)
+
 
 if __name__ == '__main__':
     unittest.main()

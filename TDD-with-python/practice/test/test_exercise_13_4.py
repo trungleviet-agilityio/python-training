@@ -4,6 +4,7 @@ from io import StringIO
 
 from exercise_13_4 import BookAnalyzer
 
+
 class BookAnalyzerTest(unittest.TestCase):
     # Define a constant for the open function name to reduce duplication
     BUILTINS_OPEN = 'builtins.open'
@@ -53,13 +54,14 @@ class BookAnalyzerTest(unittest.TestCase):
     def test_avoids(self):
         # Test the avoids method with a mocked book and words file, and verify that the expected output is printed to stdout
         mock_dict = {'the': True, 'of': True, 'and': True, 'to': True, 'in': True}
-        mock_book = {'adventures': True, 'tom': True, 'sawyer': True, 'mark': True, 'twain': True}
+        mock_book = ['adventures', 'tom', 'sawyer', 'mark', 'twain']
         expected_output = "adventures\ntom\nsawyer\nmark\ntwain\n\nIn total there are 5 words which are not in words.txt file\n"
 
         with patch(BookAnalyzerTest.BUILTINS_OPEN, mock_open(read_data='the\nof\nand\nto\nin\n')) as mock_file, \
              patch.object(BookAnalyzer, 'break_into_words', return_value=mock_book), \
              patch.object(BookAnalyzer, 'words_list', return_value=mock_dict), \
              patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+
             BookAnalyzer.avoids()
             self.assertEqual(mock_stdout.getvalue(), expected_output)
 

@@ -7,13 +7,14 @@ import string
 WORDS_FILE_PATH = 'words.txt'
 BOOK_WORDS_FILE_PATH = 'tsawyer.txt'
 
+
 def book_words(file_path):
     """
     This function reads a file at the given file path, breaks it into
     a list of lowercase words with punctuation removed.
     """
     with open(file_path, 'r') as f:
-        text = f.read().replace('\n', '')
+        text = f.read().replace('\n', ' ')
         # Remove punctuation and split the text into words
         words_list = [word.lower() for word in text.split() if word not in string.punctuation]
 
@@ -61,20 +62,14 @@ class TestBookWords(unittest.TestCase):
         result = words_list(WORDS_FILE_PATH)
         self.assertGreater(len(result), 0)
 
-    def test_avoids_contains_only_words_not_in_words_list(self):
-        # Test that avoids() returns a set containing only words not in the words list
+    def test_avoids_contains_no_words_in_words_list(self):
+        # Test that avoids() returns a set containing no words in the words list
         result = avoids()
         self.assertIsInstance(result, set)
         words_set = set(result)
         words_list_set = set(words_list(WORDS_FILE_PATH))
-        self.assertTrue(all(word not in words_list_set for word in words_set))
-
-    def test_avoids_contains_no_words_in_words_list(self):
-        # Test that avoids() returns a set containing no words in the words list
-        result = avoids()
-        words_set = set(result)
-        words_list_set = set(words_list(WORDS_FILE_PATH))
-        self.assertTrue(len(words_set.intersection(words_list_set)) == 0)
+        # Check that the two sets have no common elements
+        self.assertEqual(words_set.intersection(words_list_set), set())
 
 
 if __name__ == '__main__':

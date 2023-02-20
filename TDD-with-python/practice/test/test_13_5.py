@@ -100,5 +100,6 @@ class TestHistogram(unittest.TestCase):
         for k in h:
             self.assertAlmostEqual(counts[k], expected_counts[k], delta=0.02 * n_trials)
 
+
 if __name__ == '__main__':
     unittest.main()

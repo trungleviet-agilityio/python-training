@@ -6,6 +6,7 @@ if the letters in a word appear in alphabetical order
 import unittest
 from unittest.mock import MagicMock
 
+
 # Check if a word is abecedarian
 def is_abecedarian(word):
     """
