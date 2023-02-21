@@ -38,6 +38,7 @@ class TestUsesOnly(unittest.TestCase):
             ('help', 'helo'),
             ('world', 'dlr'),
             ('Python3', 'Python'),
+            ('Pyth2', 'Python'),
         ]
         for word, allowed_letters in invalid_words:
             with self.subTest(word=word, allowed_letters=allowed_letters):

@@ -53,7 +53,7 @@ class BookAnalyzerTest(unittest.TestCase):
 
     def test_avoids(self):
         # Test the avoids method with a mocked book and words file, and verify that the expected output is printed to stdout
-        mock_dict = {'the': True, 'of': True, 'and': True, 'to': True, 'in': True}
+        mock_dict = ['the', 'of', 'and', 'to', 'in']
         mock_book = ['adventures', 'tom', 'sawyer', 'mark', 'twain']
         expected_output = "adventures\ntom\nsawyer\nmark\ntwain\n\nIn total there are 5 words which are not in words.txt file\n"
 
