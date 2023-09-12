@@ -26,27 +26,45 @@ class ModelTests(TestCase):
             name="Human Resources",
             description="This is the Human Resources department."
         )
+
         self.department_marketing = models.Department.objects.create(
             name="Marketing",
             description="This is the Marketing department."
         )
 
-        # Create test contacts
-        self.contact1 = models.Contact.objects.create(
-            street_address="123 Main St", 
-            city="New York", 
-            state="NY", 
-            postal_code="10001",
-            phone_number="555-123-4567"
-        )
-        self.contact2 = models.Contact.objects.create(
-            street_address="456 Elm St", 
-            city="Los Angeles", 
-            state="CA", 
-            postal_code="90001",
-            phone_number="555-987-6543"
+        # Create employees
+        self.employee1 = models.Employee.objects.create(
+            first_name="John",
+            last_name="Doe",
+            department=self.department_hr,
+            resume='employee_resumes/john_doe_resume.pdf'
         )
 
+        self.employee2 = models.Employee.objects.create(
+            first_name="Jane",
+            last_name="Smith",
+            department=self.department_marketing,
+            resume='employee_resumes/jane_smith_resume.pdf'
+        )
+
+        # Create contacts
+        self.contact1 = models.Contact.objects.create(
+            street_address="123 Main St",
+            city="New York",
+            state="NY",
+            postal_code="10001",
+            phone_number="555-123-4567",
+            employee=self.employee1
+        )
+
+        self.contact2 = models.Contact.objects.create(
+            street_address="456 Elm St",
+            city="Los Angeles",
+            state="CA",
+            postal_code="90001",
+            phone_number="555-987-6543",
+            employee=self.employee2
+        )
 
     def test_create_superuser(self):
         """Test creating a superuser"""
@@ -61,6 +79,13 @@ class ModelTests(TestCase):
         self.assertEqual(self.department_marketing.name, "Marketing")
         self.assertEqual(self.department_marketing.description, "This is the Marketing department.")
 
+    def test_create_employee(self):
+        """Test creating an employee is successful"""
+        self.assertEqual(self.employee1.first_name, "John")
+        self.assertEqual(self.employee1.last_name, "Doe")
+        self.assertEqual(self.employee1.department, self.department_hr)
+        self.assertEqual(self.employee1.resume, 'employee_resumes/john_doe_resume.pdf')
+
     def test_create_contact(self):
         """Test creating a contact is successful"""
         self.assertEqual(self.contact1.street_address, "123 Main St")
@@ -68,9 +93,11 @@ class ModelTests(TestCase):
         self.assertEqual(self.contact1.state, "NY")
         self.assertEqual(self.contact1.postal_code, "10001")
         self.assertEqual(self.contact1.phone_number, "555-123-4567")
+        self.assertEqual(self.contact1.employee, self.employee1)
 
         self.assertEqual(self.contact2.street_address, "456 Elm St")
         self.assertEqual(self.contact2.city, "Los Angeles")
         self.assertEqual(self.contact2.state, "CA")
         self.assertEqual(self.contact2.postal_code, "90001")
         self.assertEqual(self.contact2.phone_number, "555-987-6543")
+        self.assertEqual(self.contact2.employee, self.employee2)
