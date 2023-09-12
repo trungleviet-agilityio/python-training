@@ -47,6 +47,17 @@ class ModelTests(TestCase):
             resume='employee_resumes/jane_smith_resume.pdf'
         )
 
+        # Create projects
+        self.project1 = models.Project.objects.create(
+            title="Scream Truck"
+        )
+        self.project1.employees.add(self.employee1, self.employee2)
+
+        self.project2 = models.Project.objects.create(
+            title="Venonat"
+        )
+        self.project2.employees.add(self.employee2)
+
         # Create contacts
         self.contact1 = models.Contact.objects.create(
             street_address="123 Main St",
@@ -101,3 +112,11 @@ class ModelTests(TestCase):
         self.assertEqual(self.contact2.postal_code, "90001")
         self.assertEqual(self.contact2.phone_number, "555-987-6543")
         self.assertEqual(self.contact2.employee, self.employee2)
+
+    def test_create_project(self):
+        """Test creating a project is successful"""
+        self.assertEqual(self.project1.title, "Scream Truck")
+        self.assertEqual(list(self.project1.employees.all()), [self.employee1, self.employee2])
+
+        self.assertEqual(self.project2.title, "Venonat")
+        self.assertEqual(list(self.project2.employees.all()), [self.employee2])
