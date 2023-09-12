@@ -32,3 +32,12 @@ class Employee(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
+class Project(models.Model):
+    """Project object."""
+    title = models.CharField(max_length=100)
+    employees = models.ManyToManyField(Employee, related_name='projects_involved')  # Employees involved in a project
+
+    def __str__(self):
+        return self.title
