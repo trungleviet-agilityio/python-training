@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Department List{% endblock %}
+
+{% block content %}
+    {% include 'employee/includes/header.html' %}
+    <h2>Department List</h2>
+    <table>
+        <!-- Table content specific to departments -->
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for department in departments %}
+                <tr>
+                    <td>{{ department.name }}</td>
+                    <td>{{ department.description }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">No departments available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
