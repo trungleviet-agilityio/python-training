@@ -1,8 +1,9 @@
 from django.http import JsonResponse
 from django.views import View
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 
-from core.models import Employee
+from .models import Employee
+
 from .forms import EmployeeForm
 
 def home(request):

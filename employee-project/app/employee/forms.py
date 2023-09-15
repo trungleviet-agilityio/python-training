@@ -1,6 +1,6 @@
 from django import forms
 
-from core.models import Employee
+from .models import Employee
 
 class EmployeeForm(forms.ModelForm):
     class Meta:
