@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static "styles.css" %}">
+    <link rel="stylesheet" href="{% static "css/styles.css" %}">
     {% block css_files %}{% endblock %}
 </head>
 <body>
@@ -15,5 +15,7 @@
             {% block content %}{% endblock %}
         </div>
     </main>
+    <!-- Include the app-specific JavaScript file -->
+    <script src="{% static 'js/employee.js' %}"></script>
 </body>
 </html>
