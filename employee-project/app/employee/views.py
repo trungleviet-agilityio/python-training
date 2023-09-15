@@ -1,17 +1,34 @@
-from django.shortcuts import render
+from audioop import reverse
+from django.http import JsonResponse
+from django.views import View
+from django.shortcuts import redirect, render
 
+from .models import Employee
+
+from .forms import EmployeeForm
 
 def home(request):
     return render(request, 'employee/home.html')
 
 
-def employee_list(request):
-    employees = [
-        {"first_name": "John", "last_name": "Doe", "department": "HR"},
-        {"first_name": "Jane", "last_name": "Smith", "department": "Engineering"},
-        {"first_name": "Alice", "last_name": "Johnson", "department": "Sales"},
-    ]
-    return render(request, 'employee/employee_list.html', {'employees': employees})
+class EmployeeView(View):
+    template_name = 'employee/employee_list.html'
+
+    def get(self, request):
+        employees = Employee.objects.all()
+        form = EmployeeForm()
+
+        return render(request, self.template_name, {'employees': employees, 'form': form})
+
+    def post(self, request):
+        form = EmployeeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Redirect to the employee list page after successful creation
+            return redirect('employee-list-create')
+
+        errors = form.errors.as_json()
+        return JsonResponse({'success': False, 'errors': errors})
 
 
 def contact_list(request):
