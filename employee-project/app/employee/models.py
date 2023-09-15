@@ -27,8 +27,8 @@ class Employee(models.Model):
     """Employee object."""
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='employees')
-    resume = models.FileField(upload_to='employee_resumes/')
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='employees', null=True, blank=True)
+    resume = models.FileField(upload_to='employee_resumes/', null=True, blank=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

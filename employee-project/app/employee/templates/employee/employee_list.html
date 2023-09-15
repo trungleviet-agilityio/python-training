@@ -33,13 +33,15 @@
         </tbody>
     </table>
 
-    <!-- Employee creation form modal -->
+    <!-- Employee creation form modal trigger -->
     <button id="show-create-modal">Create Employee</button>
 
+    <!-- Modal -->
     <div id="create-modal" style="display: none;">
         <div class="modal-content">
-            <form method="post" id="create-form">
-                <h2>Create Employee</h2>
+            <h2>Create Employee</h2>
+            <!-- Your form content here -->
+            <form method="post" id="create-form" enctype="multipart/form-data" action="{% url 'employee-list-create' %}">
                 {% csrf_token %}
                 
                 <!-- Use the same structure for form rendering -->
@@ -53,6 +55,7 @@
                 
                 <button type="submit">Create</button>
             </form>
+            <button id="close-create-modal">Close</button>
         </div>
     </div>
 {% endblock %}

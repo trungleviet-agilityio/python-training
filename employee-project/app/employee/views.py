@@ -1,6 +1,7 @@
+from audioop import reverse
 from django.http import JsonResponse
 from django.views import View
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from .models import Employee
 
@@ -23,10 +24,11 @@ class EmployeeView(View):
         form = EmployeeForm(request.POST)
         if form.is_valid():
             form.save()
-            return JsonResponse({'success': True})
-        employees = Employee.objects.all()
+            # Redirect to the employee list page after successful creation
+            return redirect('employee-list-create')
 
-        return JsonResponse({'success': False, 'errors': form.errors})
+        errors = form.errors.as_json()
+        return JsonResponse({'success': False, 'errors': errors})
 
 
 def contact_list(request):

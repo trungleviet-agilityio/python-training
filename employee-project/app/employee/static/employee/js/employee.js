@@ -10,21 +10,10 @@ document.addEventListener("DOMContentLoaded", function () {
         createModal.style.display = "block";
     });
 
-    const createForm = document.getElementById("create-form");
+    const closeCreateModalButton = document.getElementById("close-create-modal");
 
-    createForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        fetch("{% url 'employee-list-create' %}", {
-            method: "POST",
-            body: new FormData(createForm),
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            if (data.success) {
-                createModal.style.display = "none";
-                createForm.reset();
-            }
-        });
+    closeCreateModalButton.addEventListener("click", function () {
+        closeModal();
     });
 
     // Close modal when clicking outside of it
