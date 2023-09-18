@@ -8,6 +8,6 @@ class EmployeeForm(forms.ModelForm):
         fields = ("first_name", "last_name")
         
         labels = {
-            "first_name": "Your First Name",
-            "last_name": "Your Last Name",
+            "first_name": "First Name",
+            "last_name": "Last Name",
         }
