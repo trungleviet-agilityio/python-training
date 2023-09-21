@@ -6,6 +6,7 @@ COPY ./requirements.txt /tmp/requirements.txt
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 COPY ./scripts /scripts
 COPY ./app /app
+COPY ./gunicorn_config.py /gunicorn_config.py
 WORKDIR /app
 EXPOSE 8000
 
@@ -19,6 +20,7 @@ RUN python -m venv /py && \
     if [ $DEV = "true" ]; \
         then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
     fi && \
+    /py/bin/pip install gunicorn && \
     rm -rf /tmp && \
     apk del .tmp-build-deps && \
     adduser \
@@ -31,8 +33,11 @@ RUN python -m venv /py && \
     chmod -R 755 /vol && \
     chmod -R +x /scripts
 
+# Collect static files
+RUN /py/bin/python manage.py collectstatic --noinput
+
 ENV PATH="/scripts:/py/bin:$PATH"
 
 USER django-user
 
-CMD ["run.sh"]
+CMD ["gunicorn", "-c", "/gunicorn_config.py", "app.wsgi:application"]
