@@ -5,7 +5,7 @@ services:
     build:
       context: .
       args:
-        - DEV=true
+        - DEV=false  # Disable development dependencies for production
     ports:
       - "8000:8000"
     volumes:
@@ -18,10 +18,10 @@ services:
              gunicorn -c /gunicorn_config.py app.wsgi:application"
     environment:
       - DB_HOST=db
-      - DB_NAME=devdb
-      - DB_USER=devuser
-      - DB_PASS=changeme
-      - DEBUG=1
+      - DB_NAME=prod_db
+      - DB_USER=prod_user
+      - DB_PASS=prod_password
+      - DEBUG=0
     depends_on:
       db:
         condition: service_healthy
@@ -29,14 +29,14 @@ services:
   db:
     image: postgres:13-alpine
     volumes:
-      - dev-db-data:/var/lib/postgresql/data
+      - prod-db-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=devdb
-      - POSTGRES_USER=devuser
-      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_DB=prod_db
+      - POSTGRES_USER=prod_user
+      - POSTGRES_PASSWORD=prod_password
     healthcheck:
-      test: ["CMD", "pg_isready", "-q", "-d", "devdb", "-U", "devuser"]
+      test: ["CMD", "pg_isready", "-q", "-d", "prod_db", "-U", "prod_user"]
 
 volumes:
-  dev-db-data:
+  prod-db-data:
   dev-static-data:  # Define a volume for static files

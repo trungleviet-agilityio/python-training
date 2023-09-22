@@ -5,7 +5,7 @@ FROM python:3.9-alpine3.13
 ENV PYTHONUNBUFFERED 1
 
 # Create and set the working directory
-WORKDIR /app
+WORKDIR /app/app  # Adjust the working directory to your Django project directory
 
 # Copy requirements files and other project files
 COPY ./requirements.txt /tmp/requirements.txt
@@ -17,8 +17,8 @@ COPY ./app /app
 COPY ./public /vol/web/static
 
 # Create the /app/static directory and copy static files into it
-RUN mkdir -p static
-COPY ./static static
+RUN mkdir -p /app/app/static
+COPY ./app/static /app/app/static
 
 COPY ./gunicorn_config.py /gunicorn_config.py
 

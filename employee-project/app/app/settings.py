@@ -124,11 +124,12 @@ USE_TZ = True
 
 # Define STATIC_URL and STATIC_ROOT
 STATIC_URL = '/static/'
-STATIC_ROOT = '/vol/web/static'
+STATIC_ROOT = '/static/'
+# STATIC_ROOT = BASE_DIR / 'public'
 
 # Make sure to include the app name when defining STATICFILES_DIRS
 STATICFILES_DIRS = [
-    BASE_DIR / "static"
+    BASE_DIR / 'static'
 ]
 
 # Default primary key field type
