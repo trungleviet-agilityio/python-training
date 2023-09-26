@@ -1,13 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
     const showCreateModalButton = document.getElementById("show-create-modal");
     const createModal = document.getElementById("create-modal");
+    const overlay = document.getElementById("overlay");
 
     const closeModal = () => {
         createModal.style.display = "none";
+        overlay.style.display = "none";
     };
 
     showCreateModalButton.addEventListener("click", function () {
         createModal.style.display = "block";
+        overlay.style.display = "block";
     });
 
     const closeCreateModalButton = document.getElementById("close-create-modal");
@@ -16,11 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
         closeModal();
     });
 
-    // Close modal when clicking outside of it
-    window.addEventListener("click", function (event) {
-        if (event.target === createModal) {
-            closeModal();
-        }
+    overlay.addEventListener("click", function () {
+        closeModal();
     });
 
     // Close modal when pressing the "Esc" key

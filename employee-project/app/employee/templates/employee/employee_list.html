@@ -5,7 +5,7 @@
 
 {% block content %}
     <!-- Include the styles.css file -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/employee.css' %}"> {% endcomment %}
     
     {% include 'employee/includes/header.html' %}
     <h2>Employee List</h2>
@@ -37,13 +37,12 @@
     <button id="show-create-modal">Create Employee</button>
 
     <!-- Modal -->
-    <div id="create-modal" style="display: none;">
+    <div class="popup" id="create-modal">
         <div class="modal-content">
             <h2>Create Employee</h2>
             <!-- Your form content here -->
             <form method="post" id="create-form" enctype="multipart/form-data" action="{% url 'employee-list-create' %}">
                 {% csrf_token %}
-                
                 <!-- Use the same structure for form rendering -->
                 {% for field in form %}
                     <div class="form-control">
@@ -52,12 +51,12 @@
                         {{ field.errors }}
                     </div>
                 {% endfor %}
-                
                 <button type="submit">Create</button>
+                <button id="close-create-modal">Close</button>
             </form>
-            <button id="close-create-modal">Close</button>
         </div>
     </div>
+
 {% endblock %}
 
 {% block scripts %}
