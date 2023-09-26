@@ -1,7 +1,5 @@
-from audioop import reverse
-from django.http import JsonResponse
-from django.views import View
-from django.shortcuts import redirect, render
+from django.views.generic import ListView
+from django.shortcuts import  redirect, render
 
 from .models import Employee
 
@@ -11,24 +9,39 @@ def home(request):
     return render(request, 'employee/home.html')
 
 
-class EmployeeView(View):
+class EmployeeListView(ListView):
+    model = Employee
     template_name = 'employee/employee_list.html'
+    context_object_name = 'employees'
 
-    def get(self, request):
-        employees = Employee.objects.all()
-        form = EmployeeForm()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = EmployeeForm()
+        return context
 
-        return render(request, self.template_name, {'employees': employees, 'form': form})
-
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         form = EmployeeForm(request.POST)
         if form.is_valid():
             form.save()
-            # Redirect to the employee list page after successful creation
-            return redirect('employee-list-create')
+            return redirect('employee-list')
+        else:
+            # Handle form errors
+            pass
 
-        errors = form.errors.as_json()
-        return JsonResponse({'success': False, 'errors': errors})
+    def put(self, request, *args, **kwargs):
+        employee = Employee.objects.get(pk=kwargs['pk'])
+        form = EmployeeForm(request.POST, instance=employee)
+        if form.is_valid():
+            form.save()
+            return redirect('employee-list')
+        else:
+            # Handle form errors
+            pass
+
+    def delete(self, request, *args, **kwargs):
+        employee = Employee.objects.get(pk=kwargs.get('pk'))
+        employee.delete()
+        return redirect('employee-list')
 
 
 def contact_list(request):
