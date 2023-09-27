@@ -8,7 +8,7 @@
     <h2>Employee List</h2>
 
     <!-- Create Employee Button -->
-    <button class="create-employee" data-modal-id="employee-modal">Create Employee</button>
+    <button class="create-employee" data-modal-title="Create Employee" data-action="{% url 'employee-create' %}">Create Employee</button>
 
     <table>
         <!-- Table content specific to employees -->
@@ -27,8 +27,9 @@
                     <td>{{ employee.last_name }}</td>
                     <td>{{ employee.department }}</td>
                     <td>
-                        <button class="edit-employee" data-id="{{ employee.pk }}">Edit</button>
-                        <button class="delete-employee" data-id="{{ employee.pk }}">Delete</button>
+                        <!-- Modify the "Edit" button to include data-modal-title and data-action attributes -->
+                        <button class="edit-employee" data-id="{{ employee.id }}" data-modal-title="Edit Employee" data-action="{% url 'employee-edit' employee.id %}">Edit</button>
+                        <button class="delete-employee" data-id="{{ employee.id }}">Delete</button>
                     </td>
                 </tr>
             {% empty %}
