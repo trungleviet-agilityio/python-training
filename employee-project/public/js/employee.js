@@ -1,74 +1,40 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const showModalButtons = document.querySelectorAll(".edit-employee, .create-employee");
-    const closeModalButtons = document.querySelectorAll(".close, #close-employee-modal, #close-delete-modal");
-    const overlay = document.getElementById("overlay");
-    const modals = document.querySelectorAll(".modal");
-    const deleteButtons = document.querySelectorAll(".delete-employee");
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the common modal
+    const commonModal = document.querySelector('.modal-common');
 
-    showModalButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-            const modalId = button.getAttribute("data-modal-id");
-            const modal = document.getElementById(modalId);
-            modal.style.display = "block";
-            overlay.style.display = "block";
-        });
-    });
+    // Get the buttons that open the common modal
+    const createEmployeeButton = document.querySelector('.create-employee');
+    const editEmployeeButtons = document.querySelectorAll('.edit-employee');
 
-    closeModalButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-            modals.forEach(function (modal) {
-                modal.style.display = "none";
-            });
-            overlay.style.display = "none";
-        });
-    });
+    // Get the cancel button for the common modal
+    const cancelCommonButton = commonModal.querySelector('.cancel-button');
 
-    // Close modals when clicking the overlay
-    overlay.addEventListener("click", function () {
-        modals.forEach(function (modal) {
-            modal.style.display = "none";
-        });
-        overlay.style.display = "none";
-    });
+    // Get the modal title element
+    const modalTitle = commonModal.querySelector('.modal-title');
 
-    // Close modals when pressing the "Esc" key
-    window.addEventListener("keydown", function (event) {
-        if (event.key === "Escape") {
-            modals.forEach(function (modal) {
-                modal.style.display = "none";
-            });
-            overlay.style.display = "none";
-        }
-    });
-
-    // Handle delete button click
-    deleteButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-            const employeeId = button.getAttribute("data-id");
-            if (confirm("Are you sure you want to delete this employee?")) {
-                // Send a DELETE request to the server
-                fetch(`/employee/${employeeId}/`, {
-                    method: "DELETE",
-                    headers: {
-                        "X-CSRFToken": getCookie("csrftoken"),
-                    },
-                })
-                .then(response => {
-                    if (response.ok) {
-                        // Reload the page to reflect the updated employee list
-                        location.reload();
-                    } else {
-                        // Handle errors if needed
-                    }
-                });
-            }
-        });
-    });
-
-    // Function to get CSRF token from cookies
-    function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
+    // Function to open the common modal with a specific title
+    function openCommonModal(title) {
+        modalTitle.textContent = title; // Set the modal title
+        commonModal.style.display = 'block';
     }
+
+    // Function to close the common modal
+    function closeCommonModal() {
+        commonModal.style.display = 'none';
+    }
+
+    // Add click event listener to open the common modal for creating an employee
+    createEmployeeButton.addEventListener('click', function() {
+        openCommonModal('Create Employee'); // Set the title
+    });
+
+    // Add click event listeners to open the common modal for editing an employee
+    editEmployeeButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            openCommonModal('Update Employee'); // Set the title
+        });
+    });
+
+    // Add click event listener to close the common modal
+    cancelCommonButton.addEventListener('click', closeCommonModal);
 });

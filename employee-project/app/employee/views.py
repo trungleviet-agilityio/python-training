@@ -1,5 +1,7 @@
-from django.views.generic import ListView
-from django.shortcuts import  redirect, render
+from django.urls import reverse_lazy
+from django.views import View
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.shortcuts import  get_object_or_404, redirect, render
 
 from .models import Employee
 
@@ -9,15 +11,16 @@ def home(request):
     return render(request, 'employee/home.html')
 
 
-class EmployeeListView(ListView):
-    model = Employee
+class EmployeeListView(View):
     template_name = 'employee/employee_list.html'
-    context_object_name = 'employees'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = EmployeeForm()
-        return context
+    def get(self, request, *args, **kwargs):
+        employees = Employee.objects.all()
+        context = {
+            'employees': employees,
+            'employee_form': EmployeeForm(),  # Create an empty form for creating employees
+        }
+        return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         form = EmployeeForm(request.POST)
@@ -28,8 +31,27 @@ class EmployeeListView(ListView):
             # Handle form errors
             pass
 
-    def put(self, request, *args, **kwargs):
-        employee = Employee.objects.get(pk=kwargs['pk'])
+
+class EmployeeCreateView(CreateView):
+    model = Employee
+    form_class = EmployeeForm
+    template_name = 'employee/employee_form.html'
+    success_url = reverse_lazy('employee-list')
+
+
+class EmployeeEditView(View):
+    template_name = 'employee/employee_list.html'  # Use the same template as the employee list
+
+    def get(self, request, employee_id, *args, **kwargs):
+        employee = get_object_or_404(Employee, pk=employee_id)
+        context = {
+            'employees': Employee.objects.all(),
+            'employee_form': EmployeeForm(instance=employee),
+        }
+        return render(request, self.template_name, context)
+
+    def put(self, request, employee_id, *args, **kwargs):
+        employee = get_object_or_404(Employee, pk=employee_id)
         form = EmployeeForm(request.POST, instance=employee)
         if form.is_valid():
             form.save()
@@ -38,8 +60,10 @@ class EmployeeListView(ListView):
             # Handle form errors
             pass
 
-    def delete(self, request, *args, **kwargs):
-        employee = Employee.objects.get(pk=kwargs.get('pk'))
+
+class EmployeeDeleteView(View):
+    def delete(self, request, employee_id, *args, **kwargs):
+        employee = get_object_or_404(Employee, pk=employee_id)
         employee.delete()
         return redirect('employee-list')
 

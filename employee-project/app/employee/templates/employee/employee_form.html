@@ -1,0 +1,13 @@
+<!-- employee_form.html -->
+{% extends 'modal.html' %}
+
+{% block modal_title %}
+    <h2>{{ modal_title }}</h2>
+{% endblock %}
+
+{% block modal_body %}
+    <form method="post" id="employeeForm">
+        {% csrf_token %}
+        {{ employee_form.as_p }}
+    </form>
+{% endblock %}

@@ -6,6 +6,10 @@
 {% block content %}
     {% include 'employee/includes/header.html' %}
     <h2>Employee List</h2>
+
+    <!-- Create Employee Button -->
+    <button class="create-employee" data-modal-id="employee-modal">Create Employee</button>
+
     <table>
         <!-- Table content specific to employees -->
         <thead>
@@ -34,35 +38,9 @@
             {% endfor %}
         </tbody>
     </table>
-    
-    <!-- Create/Update Employee Modal -->
-    <div class="modal" id="employee-modal">
-        <div class="modal-content">
-            <span class="close" id="close-employee-modal">&times;</span>
-            <h2>Create/Update Employee</h2>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Save</button>
-                <button class="cancel" id="cancel-employee-modal">Cancel</button>
-            </form>
-        </div>
-    </div>
-    
-    <!-- Delete Employee Modal -->
-    <div class="modal" id="delete-modal">
-        <div class="modal-content">
-            <h2>Delete Employee</h2>
-            <p>Are you sure you want to delete {{ employee.first_name }} {{ employee.last_name }}?</p>
-            <form method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger">Delete</button>
-                <button class="btn btn-secondary" id="close-delete-modal">Cancel</button>
-            </form>
-        </div>
-    </div>
-    
-    <button class="create-employee" data-modal-id="employee-modal">Create Employee</button>
+
+    <!-- Employee-specific Modal for Create/Edit -->
+    {% include 'employee/employee_form.html' with employee_form=employee_form %}
     
     <!-- Include the external JavaScript file -->
     <script src="{% static 'js/employee.js' %}"></script>
