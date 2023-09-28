@@ -1,0 +1,20 @@
+<!-- delete_confirmation_modal.html -->
+{% extends 'modal.html' %}
+
+{% block form_id %}deleteEmployeeForm{% endblock %}
+
+{% block modal_title %}
+    <h5 class="delete-modal-title">Confirm Deletion</h5>
+{% endblock %}
+
+{% block modal_body %}
+    <div class="modal-content">
+        <p>Are you sure you want to delete {{ employee.first_name }} {{ employee.last_name }}?</p>
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form.confirm_delete }}
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+{% endblock %}

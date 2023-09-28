@@ -1,5 +1,6 @@
-from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy
+from audioop import reverse
+from django.http import HttpResponseRedirect, JsonResponse
+from django.urls import NoReverseMatch, reverse_lazy
 from django.views import View
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.shortcuts import  get_object_or_404, redirect, render
@@ -12,6 +13,7 @@ def home(request):
     return render(request, 'employee/home.html')
 
 
+# EmployeeListView will be updated to handle POST requests for form submission.
 class EmployeeListView(ListView):
     model = Employee
     template_name = 'employee/employee_list.html'
@@ -22,28 +24,24 @@ class EmployeeListView(ListView):
         context['employee_form'] = EmployeeForm()  # Create an empty form for creating employees
         return context
 
+    def post(self, request, *args, **kwargs):
+        employee_form = EmployeeForm(request.POST)
+        if employee_form.is_valid():
+            employee_form.save()
+        return redirect('employee-list')
+
 
 class EmployeeCreateView(CreateView):
+    # Handle create an employee
     model = Employee
     template_name = 'employee/employee_form.html'
     form_class = EmployeeForm
     success_url = reverse_lazy('employee-list')
 
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
-
     def form_valid(self, form):
         # Customize behavior for a valid form submission
         employee = form.save()  # Save the employee
-        return HttpResponseRedirect(self.get_success_url())  # Redirect to the success URL
-
-    def form_invalid(self, form):
-        # Customize behavior for an invalid form submission
-        return self.render_to_response(self.get_context_data(form=form))
+        return super().form_valid(form)  # Call the parent class's form_valid method
 
 
 class EmployeeEditView(UpdateView):
@@ -52,28 +50,51 @@ class EmployeeEditView(UpdateView):
     form_class = EmployeeForm
     success_url = reverse_lazy('employee-list')
 
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+    def get(self, request, *args, **kwargs):
+        employee = self.get_object()
+        data = {
+            'first_name': employee.first_name,
+            'last_name': employee.last_name,
+        }
+        return JsonResponse(data)
 
     def form_valid(self, form):
-        # Customize behavior for a valid form submission
-        employee = form.save()  # Save the employee
-        return HttpResponseRedirect(self.get_success_url())  # Redirect to the success URL
+        form.save()
 
-    def form_invalid(self, form):
-        # Customize behavior for an invalid form submission
-        return self.render_to_response(self.get_context_data(form=form))
+        return super().form_valid(form)
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(self.model, pk=self.kwargs['employee_id'])
 
 
-class EmployeeDeleteView(View):
-    def delete(self, request, employee_id, *args, **kwargs):
-        employee = get_object_or_404(Employee, pk=employee_id)
-        employee.delete()
-        return redirect('employee-list')
+class EmployeeDeleteView(DeleteView):
+    model = Employee
+    template_name = 'employee/delete_confirmation_modal.html'
+    success_url = reverse_lazy('employee-list')
+
+    # Override the get_success_url method to return the success URL with any necessary query parameters
+    def get_success_url(self):
+        return self.success_url
+
+    def get_object(self, queryset=None):
+        # Get the employee object based on the employee_id from the URL
+        return Employee.objects.get(pk=self.kwargs['employee_id'])
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = EmployeeForm(request.POST)
+
+        print(self.object)
+
+        if form.is_valid() and form.cleaned_data['confirm_delete']:
+            self.object.delete()
+            return redirect(self.get_success_url())
+
+        return render(
+            request,
+            self.template_name,
+            context={'employee': self.object, 'form': form}
+        )
 
 
 def contact_list(request):

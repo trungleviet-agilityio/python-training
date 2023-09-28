@@ -28,8 +28,8 @@
                     <td>{{ employee.department }}</td>
                     <td>
                         <!-- Modify the "Edit" button to include data-modal-title and data-action attributes -->
-                        <button class="edit-employee" data-id="{{ employee.id }}" data-modal-title="Edit Employee" data-action="{% url 'employee-edit' employee.id %}">Edit</button>
-                        <button class="delete-employee" data-id="{{ employee.id }}">Delete</button>
+                        <button class="edit-employee" data-modal-title="Edit Employee" data-id="{{ employee.id }}" data-edit-url="{% url 'employee-edit' employee_id=employee.id %}">Edit</button>
+                        <button class="delete-employee" data-modal-title="Confirm Deletion" data-id="{{ employee.id }}" data-delete-url="{% url 'employee-delete' employee_id=employee.id %}">Delete</button>
                     </td>
                 </tr>
             {% empty %}
@@ -42,6 +42,9 @@
 
     <!-- Employee-specific Modal for Create/Edit -->
     {% include 'employee/employee_form.html' with employee_form=employee_form %}
+
+    <!-- Include the delete confirmation modal -->
+    {% include 'employee/delete_confirmation_modal.html' %}
     
     <!-- Include the external JavaScript file -->
     <script src="{% static 'js/employee.js' %}"></script>
