@@ -1,7 +1,9 @@
 from audioop import reverse
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
+from django.urls import NoReverseMatch, reverse_lazy
 from django.views import View
-from django.shortcuts import redirect, render
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.shortcuts import  get_object_or_404, redirect, render
 
 from .models import Employee
 
@@ -11,24 +13,39 @@ def home(request):
     return render(request, 'employee/home.html')
 
 
-class EmployeeView(View):
+# Employee List View
+class EmployeeListView(ListView):
+    model = Employee
     template_name = 'employee/employee_list.html'
+    context_object_name = 'employees'
+
+
+class EmployeeCreateView(View):
+    template_name = 'employee/employee_form.html'
 
     def get(self, request):
-        employees = Employee.objects.all()
         form = EmployeeForm()
-
-        return render(request, self.template_name, {'employees': employees, 'form': form})
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
         form = EmployeeForm(request.POST)
         if form.is_valid():
             form.save()
-            # Redirect to the employee list page after successful creation
-            return redirect('employee-list-create')
+            return redirect('employee-list')
+        return render(request, self.template_name, {'form': form})
 
-        errors = form.errors.as_json()
-        return JsonResponse({'success': False, 'errors': errors})
+
+class EmployeeEditView(UpdateView):
+    model = Employee
+    template_name = 'employee/employee_form.html'
+    form_class = EmployeeForm
+    success_url = '/employees/'
+
+
+class EmployeeDeleteView(DeleteView):
+    model = Employee
+    template_name = 'employee/delete_confirmation.html'
+    success_url = '/employees/'
 
 
 def contact_list(request):
@@ -36,7 +53,7 @@ def contact_list(request):
         {"street_address": "123 Main St", "city": "New York", "state": "NY", "postal_code": "10001", "phone_number": "123-456-7890"},
         {"street_address": "456 Elm St", "city": "Los Angeles", "state": "CA", "postal_code": "90001", "phone_number": "987-654-3210"},
         {"street_address": "789 Oak St", "city": "Chicago", "state": "IL", "postal_code": "60601", "phone_number": "555-123-4567"},
-    ]    
+    ]
     return render(request, 'employee/contact_list.html', {'contacts': contacts})
 
 

@@ -4,18 +4,17 @@
 {% block title %}Employee List{% endblock %}
 
 {% block content %}
-    <!-- Include the styles.css file -->
-    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/employee.css' %}"> {% endcomment %}
-    
-    {% include 'employee/includes/header.html' %}
     <h2>Employee List</h2>
+
+    <a class="create-employee" href="{% url 'employee-create' %}">Create Employee</a>
+
     <table>
-        <!-- Table content specific to employees -->
         <thead>
             <tr>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Department</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -24,42 +23,19 @@
                     <td>{{ employee.first_name }}</td>
                     <td>{{ employee.last_name }}</td>
                     <td>{{ employee.department }}</td>
+                    <td>
+                        <a class="edit-employee" href="{% url 'employee-edit' pk=employee.pk %}">Edit</a>
+                        <a class="delete-employee" href="{% url 'employee-delete' pk=employee.pk %}">Delete</a>
+                    </td>
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="3">No employees available.</td>
+                    <td colspan="4">No employees available.</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <!-- Employee creation form modal trigger -->
-    <button id="show-create-modal">Create Employee</button>
-
-    <!-- Modal -->
-    <div class="popup" id="create-modal">
-        <div class="modal-content">
-            <h2>Create Employee</h2>
-            <!-- Your form content here -->
-            <form method="post" id="create-form" enctype="multipart/form-data" action="{% url 'employee-list-create' %}">
-                {% csrf_token %}
-                <!-- Use the same structure for form rendering -->
-                {% for field in form %}
-                    <div class="form-control">
-                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                        {{ field }}
-                        {{ field.errors }}
-                    </div>
-                {% endfor %}
-                <button type="submit">Create</button>
-                <button id="close-create-modal">Close</button>
-            </form>
-        </div>
-    </div>
-
-{% endblock %}
-
-{% block scripts %}
     <!-- Include the external JavaScript file -->
     <script src="{% static 'js/employee.js' %}"></script>
 {% endblock %}
