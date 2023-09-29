@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Confirm Deletion{% endblock %}
+
+{% block content %}
+    <h2>Confirm Deletion</h2>
+    <p>Are you sure you want to delete "{{ employee.first_name }} {{ employee.last_name }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Confirm Delete</button>
+        <a class="cancel-button" href="{% url 'employee-list' %}">Cancel</a>
+    </form>
+{% endblock %}
