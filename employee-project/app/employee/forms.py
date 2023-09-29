@@ -1,6 +1,6 @@
 from django import forms
 from django.core.validators import RegexValidator
-from .models import Contact, Department, Employee
+from .models import Contact, Department, Employee, Project
 
 class EmployeeForm(forms.ModelForm):
     confirm_delete = forms.BooleanField(
@@ -65,3 +65,15 @@ class ContactForm(forms.ModelForm):
             "postal_code": "Postal Code",
             "phone_number": "Phone Number",
         }
+
+
+class ProjectForm(forms.ModelForm):
+    employees = forms.ModelMultipleChoiceField(
+        queryset=Employee.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False  # Optional, remove this line if you want at least one employee to be selected
+    )
+
+    class Meta:
+        model = Project
+        fields = ("title", "employees")

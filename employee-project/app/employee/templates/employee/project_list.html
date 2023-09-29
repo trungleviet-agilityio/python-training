@@ -6,21 +6,30 @@
 {% block content %}
     {% include 'employee/includes/header.html' %}
     <h2>Project List</h2>
+    
+    <!-- Create Project Button -->
+    <a href="{% url 'project-create' %}" class="create-project">Create Project</a>
+
     <table>
         <!-- Table content specific to projects -->
         <thead>
             <tr>
                 <th>Title</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for project in projects %}
                 <tr>
-                    <td>{{ project.title }}</td>
+                    <td><a href="{% url 'project-detail' pk=project.pk %}">{{ project.title }}</a></td>
+                    <td>
+                        <a href="{% url 'project-edit' pk=project.pk %}" class="edit-project">Edit</a>
+                        <a href="{% url 'project-delete' pk=project.pk %}" class="delete-project">Delete</a>
+                    </td>
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="1">No projects available.</td>
+                    <td colspan="2">No projects available.</td>
                 </tr>
             {% endfor %}
         </tbody>
