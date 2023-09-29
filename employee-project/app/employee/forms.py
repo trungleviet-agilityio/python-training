@@ -1,6 +1,6 @@
 from django import forms
 from django.core.validators import RegexValidator
-from .models import Department, Employee
+from .models import Contact, Department, Employee
 
 class EmployeeForm(forms.ModelForm):
     confirm_delete = forms.BooleanField(
@@ -44,4 +44,24 @@ class DepartmentForm(forms.ModelForm):
         labels = {
             "name": "Name",
             "description": "Description",
+        }
+
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = (
+            "street_address",
+            "city",
+            "state",
+            "postal_code",
+            "phone_number",
+        )
+
+        labels = {
+            "street_address": "Street Address",
+            "city": "City",
+            "state": "State",
+            "postal_code": "Postal Code",
+            "phone_number": "Phone Number",
         }

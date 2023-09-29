@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if contact %}Edit Contact{% else %}Create Contact{% endif %}{% endblock %}
+
+{% block content %}
+    {% include 'employee/includes/header.html' %}
+    <h2>{% if contact %}Edit Contact{% else %}Create Contact{% endif %}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">{% if contact %}Update Contact{% else %}Create Contact{% endif %}</button>
+        <a href="{% url 'contact-list' %}" class="cancel-contact">Cancel</a>
+    </form>
+{% endblock %}
