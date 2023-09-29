@@ -5,9 +5,9 @@ from django.views import View
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.shortcuts import  get_object_or_404, redirect, render
 
-from .models import Employee
+from .models import Department, Employee
 
-from .forms import EmployeeForm
+from .forms import DepartmentForm, EmployeeForm
 
 def home(request):
     return render(request, 'employee/home.html')
@@ -45,31 +45,62 @@ class EmployeeEditView(UpdateView):
 class EmployeeDeleteView(DeleteView):
     model = Employee
     template_name = 'employee/delete_confirmation.html'
-    success_url = '/employees/'
+    success_url = reverse_lazy('employee-list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['item'] = str(self.object)  # Pass the employee name to the template
+        context['cancel_url'] = reverse_lazy('employee-list')
+        return context
 
 
-def contact_list(request):
-    contacts = [
-        {"street_address": "123 Main St", "city": "New York", "state": "NY", "postal_code": "10001", "phone_number": "123-456-7890"},
-        {"street_address": "456 Elm St", "city": "Los Angeles", "state": "CA", "postal_code": "90001", "phone_number": "987-654-3210"},
-        {"street_address": "789 Oak St", "city": "Chicago", "state": "IL", "postal_code": "60601", "phone_number": "555-123-4567"},
-    ]
-    return render(request, 'employee/contact_list.html', {'contacts': contacts})
+class DepartmentListView(ListView):
+    model = Department
+    template_name = 'employee/department_list.html'
+    context_object_name = 'departments'
 
 
-def department_list(request):
-    departments = [
-        {"name": "HR", "description": "Human Resources"},
-        {"name": "Engineering", "description": "Software Development"},
-        {"name": "Sales", "description": "Sales and Marketing"},
-    ]    
-    return render(request, 'employee/department_list.html', {'departments': departments})
+class DepartmentCreateView(View):
+    model = Department
+    template_name = 'employee/department_form.html'
+
+    def get(self, request):
+        form = DepartmentForm()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = DepartmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('department-list')
+        return render(request, self.template_name, {'form': form})
 
 
-def project_list(request):
-    projects = [
-        {"title": "Project A"},
-        {"title": "Project B"},
-        {"title": "Project C"},
-    ]    
-    return render(request, 'employee/project_list.html', {'projects': projects})
+class DepartmentEditView(View):
+    model = Department
+    template_name = 'employee/department_form.html'
+
+    def get(self, request, pk):
+        department = self.model.objects.get(pk=pk)
+        form = DepartmentForm(instance=department)
+        return render(request, self.template_name, {'form': form, 'department': department})
+
+    def post(self, request, pk):
+        department = self.model.objects.get(pk=pk)
+        form = DepartmentForm(request.POST, instance=department)
+        if form.is_valid():
+            form.save()
+            return redirect('department-list')
+        return render(request, self.template_name, {'form': form, 'department': department})
+
+
+class DepartmentDeleteView(DeleteView):
+    model = Department
+    template_name = 'employee/delete_confirmation.html'
+    success_url = reverse_lazy('department-list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['item'] = str(self.object)  # Pass the department name to the template
+        context['cancel_url'] = reverse_lazy('department-list')
+        return context
