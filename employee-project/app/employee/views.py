@@ -1,6 +1,4 @@
-from audioop import reverse
-from django.http import HttpResponseRedirect, JsonResponse
-from django.urls import NoReverseMatch, reverse_lazy
+from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.shortcuts import  get_object_or_404, redirect, render
@@ -20,7 +18,7 @@ class EmployeeListView(ListView):
     context_object_name = 'employees'
 
 
-class EmployeeCreateView(View):
+class EmployeeCreateView(CreateView):
     template_name = 'employee/employee_form.html'
 
     def get(self, request):
@@ -104,7 +102,8 @@ class DepartmentDeleteView(DeleteView):
         context['item'] = str(self.object)  # Pass the department name to the template
         context['cancel_url'] = reverse_lazy('department-list')
         return context
-    
+
+
 class ContactListView(ListView):
     model = Contact
     template_name = 'employee/contact_list.html'
@@ -161,8 +160,9 @@ class ProjectCreateView(View):
     def post(self, request):
         form = ProjectForm(request.POST)
         if form.is_valid():
-            project = form.save()
-            form.save_m2m()  # Save the many-to-many field
+            project = form.save(commit=False)
+            project.save()  # Save the project instance to generate an ID
+            form.save_m2m()  # Save the many-to-many with employee field
             return redirect('project-list')
         return render(request, self.template_name, {'form': form})
 
