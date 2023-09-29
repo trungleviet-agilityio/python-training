@@ -2,6 +2,7 @@ from django import forms
 from django.core.validators import RegexValidator
 from .models import Contact, Department, Employee, Project
 
+
 class EmployeeForm(forms.ModelForm):
     confirm_delete = forms.BooleanField(
         required=False,
@@ -71,7 +72,6 @@ class ProjectForm(forms.ModelForm):
     employees = forms.ModelMultipleChoiceField(
         queryset=Employee.objects.all(),
         widget=forms.CheckboxSelectMultiple,
-        required=False  # Optional, remove this line if you want at least one employee to be selected
     )
 
     class Meta:
