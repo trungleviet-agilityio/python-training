@@ -5,9 +5,9 @@ from django.views import View
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.shortcuts import  get_object_or_404, redirect, render
 
-from .models import Department, Employee
+from .models import Contact, Department, Employee
 
-from .forms import DepartmentForm, EmployeeForm
+from .forms import ContactForm, DepartmentForm, EmployeeForm
 
 def home(request):
     return render(request, 'employee/home.html')
@@ -103,4 +103,43 @@ class DepartmentDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['item'] = str(self.object)  # Pass the department name to the template
         context['cancel_url'] = reverse_lazy('department-list')
+        return context
+    
+class ContactListView(ListView):
+    model = Contact
+    template_name = 'employee/contact_list.html'
+    context_object_name = 'contacts'
+
+
+class ContactCreateView(View):
+    template_name = 'employee/contact_form.html'
+
+    def get(self, request):
+        form = ContactForm()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('contact-list')
+        return render(request, self.template_name, {'form': form})
+
+
+class ContactEditView(UpdateView):
+    model = Contact
+    template_name = 'employee/contact_form.html'
+    form_class = ContactForm
+    success_url = reverse_lazy('contact-list')
+
+
+class ContactDeleteView(DeleteView):
+    model = Contact
+    template_name = 'employee/delete_confirmation.html'
+    success_url = reverse_lazy('contact-list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['item'] = str(self.object)  # Pass the contact details to the template
+        context['cancel_url'] = reverse_lazy('contact-list')
         return context
