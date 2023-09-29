@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Project Detail{% endblock %}
+
+{% block content %}
+    {% include 'employee/includes/header.html' %}
+    <h2>Project Detail: {{ project.title }}</h2>
+
+    <h3>Employees in this Project:</h3>
+    <ul>
+        {% for employee in employees %}
+            <li>{{ employee.first_name }} {{ employee.last_name }}</li>
+        {% empty %}
+            <li>No employees in this project.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'project-list' %}" class="back-to-projects">Back to Projects</a>
+{% endblock %}
