@@ -18,12 +18,27 @@ git clone <repository-url>
 cd django5
 ```
 
-## Step 2: Set Up Virtual Environment
+## Step 2: Install uv (Recommended)
+
+```bash
+pip install uv
+```
+
+> **Tip for zsh users:**
+> If you get `zsh: command not found: uv` after installing, try:
+> ```bash
+> hash -r
+> export PATH=$PATH:~/.local/bin
+> source ~/.zshrc
+> ```
+> Or restart your terminal to refresh your PATH.
+
+## Step 3: Set Up Virtual Environment
 
 Using `uv` (recommended):
 ```bash
 uv venv
-source .venv/bin/activate  # On Unix/macOS
+source .venv/bin/activate  # On Unix/macOS or zsh
 # OR
 .venv\Scripts\activate  # On Windows
 ```
@@ -31,12 +46,12 @@ source .venv/bin/activate  # On Unix/macOS
 Using `venv`:
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # On Unix/macOS
+source .venv/bin/activate  # On Unix/macOS or zsh
 # OR
 .venv\Scripts\activate  # On Windows
 ```
 
-## Step 3: Install Dependencies
+## Step 4: Install Dependencies
 
 Using `uv` (recommended):
 ```bash
@@ -48,7 +63,7 @@ Using `pip`:
 pip install -r requirements/dev.txt
 ```
 
-## Step 4: Set Up Environment Variables
+## Step 5: Set Up Environment Variables
 
 1. Copy the example environment file:
    ```bash
@@ -63,19 +78,19 @@ pip install -r requirements/dev.txt
    DATABASE_URL=sqlite:///db.sqlite3
    ```
 
-## Step 5: Initialize Database
+## Step 6: Initialize Database
 
 ```bash
 python src/manage.py migrate
 ```
 
-## Step 6: Create Superuser
+## Step 7: Create Superuser
 
 ```bash
 python src/manage.py createsuperuser
 ```
 
-## Step 7: Run Development Server
+## Step 8: Run Development Server
 
 ```bash
 python src/manage.py runserver
@@ -95,11 +110,20 @@ Visit http://localhost:8000/ in your browser to verify the installation.
    - If activation fails, ensure you're in the project directory
    - Try recreating the virtual environment
 
-3. **Dependencies**
+3. **uv Not Found (zsh users)**
+   - If you see `zsh: command not found: uv`, try:
+     ```bash
+     hash -r
+     export PATH=$PATH:~/.local/bin
+     source ~/.zshrc
+     ```
+   - Or restart your terminal
+
+4. **Dependencies**
    - If installation fails, try updating pip: `pip install --upgrade pip`
    - Check for system-level dependencies (e.g., PostgreSQL)
 
-4. **Database**
+5. **Database**
    - If migrations fail, try: `python src/manage.py migrate --run-syncdb`
    - Check database connection settings in `.env`
 
