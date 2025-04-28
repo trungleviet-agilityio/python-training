@@ -127,4 +127,10 @@ When contributing to this documentation:
 - [Django Documentation](https://docs.djangoproject.com/)
 - [Django Tutorial](https://docs.djangoproject.com/en/stable/intro/tutorial01/)
 - [Python Best Practices](https://docs.python-guide.org/)
-- [Django Design Patterns Book](https://www.packtpub.com/product/django-design-patterns-and-best-practices/9781783986644) 
+- [Django Design Patterns Book](https://www.packtpub.com/product/django-design-patterns-and-best-practices/9781783986644)
+
+## Further Reading
+
+- [Django: Working with Git and GitHub](https://docs.djangoproject.com/en/4.2/internals/contributing/writing-code/working-with-git/)
+- [Django: Contributing Guide](https://docs.djangoproject.com/en/4.2/intro/contributing/)
+- [Python: Testing and Documentation](https://docs.python.org/3/faq/library.html) 
