@@ -7,6 +7,7 @@ This directory contains documentation to help you get started with the Django pr
 - [Installation](./installation.md): Instructions for installing the project
 - [Configuration](./configuration.md): Guide for configuring the project
 - [Development Setup](./development-setup.md): Instructions for setting up a development environment
+- [Troubleshooting Guide](./troubleshooting.md): Shell and environment setup issues
 
 ## Quick Start
 

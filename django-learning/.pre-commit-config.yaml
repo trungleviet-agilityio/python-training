@@ -1,5 +1,5 @@
 # Add this top-level exclude to skip all .md files from pre-commit hooks
-exclude: '.*\.md$'
+exclude: "(.*\\.md$|^\\.pre-commit-config\\.yaml$)"
 
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
@@ -54,4 +54,11 @@ repos:
     rev: v3.15.0
     hooks:
     -   id: pyupgrade
-        args: [--py311-plus] 
+        args: [--py311-plus]
+
+# Optional: Ruff for fast linting
+-   repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.4.4
+    hooks:
+    -   id: ruff
+        args: [--fix] 
