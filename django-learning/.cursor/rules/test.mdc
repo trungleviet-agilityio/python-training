@@ -1,0 +1,17 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: Style guide for Python Projects
+globs: 
+alwaysApply: true
+---
+
+To better follow the conventions of the repo, please adopt the following style:
+
+- Do **NOT** use string literals
+- If a comparison needs to be made a string value, make sure there's a constant for it in the appropriate constant file
+- Prefer early returns whenever possible, instead of nested if or if/else ladders
+- When errors are thrown, make sure you add a constant for the string in the correct constants file

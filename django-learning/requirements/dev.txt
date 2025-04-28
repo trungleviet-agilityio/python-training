@@ -1,0 +1,18 @@
+-r base.txt
+
+# Testing
+pytest>=8.0.0
+pytest-django>=4.8.0
+pytest-cov>=4.1.0
+
+# Linting and formatting
+black>=24.1.1
+isort>=5.13.2
+flake8>=7.0.0
+mypy>=1.8.0
+
+# Type checking
+django-stubs>=4.2.7
+types-requests>=2.31.0.20240125
+types-PyYAML>=6.0.12.12
+types-setuptools>=69.0.0.20240310 
