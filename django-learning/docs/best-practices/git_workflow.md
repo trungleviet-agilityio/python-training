@@ -77,6 +77,24 @@ This guide covers a professional Git workflow for teams and how to optionally en
 ### GPG Commit Signing (Advanced, Optional)
 - See [GitHub Docs: Sign commits with GPG](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits)
 
+### Troubleshooting SSH Commit Signing
+
+- If you see errors like `invalid key^M` or `No principal matched`, your `allowed_signers` file may have Windows line endings or duplicate lines.
+- To fix line endings, run:
+  ```bash
+  sed -i 's/\r$//' ~/.ssh/allowed_signers
+  ```
+- Open the file in a text editor and ensure only one line per key, for example:
+  ```
+  * ssh-ed25519 <your-public-key> <your-email>
+  ```
+- **Never commit your SSH keys or allowed_signers file to the repository. These are for your local machine only.**
+- Save and try verifying your commit again:
+  ```bash
+  git log --show-signature -1
+  ```
+- The warnings should be gone and your commit should show a good signature.
+
 ---
 
 ## 3. Best Practices
