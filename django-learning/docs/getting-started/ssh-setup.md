@@ -11,8 +11,15 @@ ssh-keygen -t ed25519 -C "your.email@company.com" -f ~/.ssh/id_ed25519_work
 
 ## Configure SSH
 
-1. Create or modify your SSH config file:
+1. Create or modify your SSH config file (`~/.ssh/config`):
 
+For Linux:
+```bash
+# Add GitHub configuration to SSH config
+echo -e "Host github.com\n  IdentityFile ~/.ssh/id_ed25519_work\n  AddKeysToAgent yes" >> ~/.ssh/config
+```
+
+For macOS:
 ```bash
 # Add GitHub configuration to SSH config
 echo -e "Host github.com\n  IdentityFile ~/.ssh/id_ed25519_work\n  UseKeychain yes\n  AddKeysToAgent yes" >> ~/.ssh/config
@@ -58,13 +65,30 @@ Hi username! You've successfully authenticated, but GitHub does not provide shel
 
 ## Update Git Configuration
 
-Set your Git email to match your work email:
-```bash
-# Set email globally (for all repositories)
-git config --global user.email "your.email@company.com"
+IMPORTANT: Always use local Git configuration for work repositories to avoid conflicts with personal projects:
 
-# Or set email locally (for current repository only)
+```bash
+# Set email locally (for current repository only) - RECOMMENDED
 git config --local user.email "your.email@company.com"
+git config --local user.name "Your Name"
+```
+
+Why use local configuration?
+- Avoids conflicts with personal projects
+- Each repository can have its own identity
+- Prevents accidental commits with wrong email
+- Better for managing multiple GitHub accounts
+
+⚠️ Avoid using global configuration:
+```bash
+# NOT RECOMMENDED - may cause conflicts
+git config --global user.email "your.email@company.com"
+```
+
+To verify your configuration:
+```bash
+# Check local configuration
+git config --local --list | grep user
 ```
 
 ## Troubleshooting
