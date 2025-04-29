@@ -152,9 +152,11 @@ This change affects the following views:
 
 ## Pre-commit Hooks
 
-For information about pre-commit hooks, including configuration, required hooks, and best practices, please refer to the [Pre-commit Hooks](../tools/pre_commit_hooks.md) documentation.
+For information about pre-commit hooks, including configuration, required hooks, and best practices, please refer to the [Pre-commit Hooks](../../tools/pre_commit_hooks.md) documentation.
 
 ## Code Review Standards
+
+For detailed information about code review standards, please refer to the [Code Review Guide](../development/review.md).
 
 ### Pull Request Guidelines
 
@@ -207,3 +209,14 @@ For information about pre-commit hooks, including configuration, required hooks,
    - Code comments where needed
    - API documentation updated
    - README updated if needed
+
+## Branch Management
+
+For information about automatic branch deletion and branch protection rules, please refer to the [GitHub Actions](github-actions.md) documentation.
+
+## Related Documentation
+
+- [Git Workflow](git-workflow.md): Detailed workflow process and commit verification setup
+- [GitHub Actions](github-actions.md): Automated workflows and branch management
+- [Development Workflow](../development/workflow.md): Development process and practices
+- [Code Review Guide](../development/review.md): Code review guidelines and process

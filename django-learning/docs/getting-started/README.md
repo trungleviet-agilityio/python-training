@@ -1,14 +1,45 @@
 # Getting Started
 
-This directory contains documentation to help you get started with the Django project.
+This section contains guides for setting up and running the project, including installation, configuration, and troubleshooting.
 
 ## Contents
 
-- [Installation](./installation.md): Instructions for installing the project
-- [Configuration](./configuration.md): Guide for configuring the project
-- [Development Setup](./development-setup.md): Instructions for setting up a development environment
-- [SSH Setup](./ssh-setup.md): Guide for setting up SSH for secure connections
-- [Troubleshooting Guide](./troubleshooting.md): Common issues and solutions
+### Installation
+- [Installation Guide](installation.md): How to set up the project
+
+### Configuration
+- [Development Setup](development-setup.md): Environment configuration and development tools
+- [Configuration Guide](configuration.md): Project settings and environment variables
+- [SSH Setup](ssh-setup.md): Setting up SSH for secure access
+
+### Troubleshooting
+- [Troubleshooting Guide](troubleshooting.md): Common issues and solutions
+
+## How to Use This Documentation
+
+1. **New to the Project**: Start with the [Installation Guide](installation.md)
+2. **Development Setup**: Follow the [Development Setup](development-setup.md) guide
+3. **Configuration**: Refer to the [Configuration Guide](configuration.md)
+4. **SSH Setup**: Check the [SSH Setup](ssh-setup.md) guide
+5. **Troubleshooting**: Use the [Troubleshooting Guide](troubleshooting.md) for common issues
+
+## Contributing to Getting Started Documentation
+
+When contributing to getting started documentation:
+
+1. Follow the established structure and organization
+2. Use consistent formatting and style
+3. Include practical examples and code snippets
+4. Keep information up-to-date with code changes
+5. Add cross-references to related documentation
+
+## Relationship to Other Documentation
+
+This documentation is related to:
+
+- [Best Practices](../best-practices/README.md): Development standards and practices
+- [Project](../project/README.md): Project-specific implementation details
+- [Tools](../tools/README.md): Development tools and utilities
 
 ## Quick Start
 

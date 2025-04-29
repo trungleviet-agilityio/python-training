@@ -1,0 +1,20 @@
+# Configuration for branch deletion
+# Branches matching these patterns will be preserved
+preserve:
+  - main
+  - master
+  - develop
+  - release/*
+  - hotfix/*
+  - staging
+
+# Branches matching these patterns will be deleted
+delete:
+  - feature/*
+  - bugfix/*
+  - docs/*
+  - chore/*
+
+# Maximum age of branches to delete (in days)
+# Branches older than this will not be deleted
+max_age: 30

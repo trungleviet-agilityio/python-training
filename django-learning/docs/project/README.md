@@ -1,65 +1,49 @@
 # Project Documentation
 
-This directory contains documentation specific to this Django project, including architecture, API design, deployment, database migrations, backup/recovery, and maintenance procedures.
+This section contains comprehensive documentation about the project's architecture, implementation, and maintenance.
 
 ## Contents
 
 ### Architecture
-
-Project architecture and design decisions:
-- [Business Logic](./architecture/business-logic.md): Core business logic, model relationships, and business rules
-- [Data Model](./architecture/data-model.md): Entity Relationship Diagram (ERD) and data model details
+- [Architecture Overview](architecture/README.md): System design and component relationships
+- [Business Logic](architecture/business-logic.md): Business logic organization
+- [Data Model](architecture/data-model.md): Database design and relationships
 
 ### API
-
-[API Documentation](./api.md) including:
-- API endpoints
-- Authentication
-- Serialization
-
-### Deployment
-
-[Deployment Documentation](./deployment.md) including:
-- Production deployment
-- Scaling strategies
+- [API Documentation](api.md): API endpoints, serialization, and authentication
 
 ### Database
+- [Database Migrations](database_migrations.md): Migration procedures and strategies
 
-[Database Migrations](./database_migrations.md) including:
-- Migration procedures
-- Data migration strategies
-
-### Backup and Recovery
-
-[Backup and Recovery](./backup_recovery.md) including:
-- Backup procedures
-- Recovery strategies
+### Deployment
+- [Deployment Guide](deployment.md): Production deployment and scaling strategies
 
 ### Maintenance
-
-[Maintenance Procedures](./maintenance/README.md) including:
-- Monitoring and alerts
-- Regular maintenance tasks
+- [Backup & Recovery](backup_recovery.md): Backup procedures and recovery strategies
+- [Maintenance Overview](maintenance/README.md): Monitoring, alerts, and regular maintenance tasks
 
 ## How to Use This Documentation
 
-1. Start with the [Architecture](./architecture/README.md) section to understand the project's design
-2. Review the [Business Logic](./architecture/business-logic.md) to understand the core requirements
-3. Explore the [Data Model](./architecture/data-model.md) to understand the data structure
-4. Refer to the [API](./api.md) section for integration details
-5. Use the [Deployment](./deployment.md) and [Maintenance](./maintenance/README.md) sections for operational guidance
+1. **New to the Project**: Start with the [Architecture Overview](architecture/README.md)
+2. **API Development**: Refer to [API Documentation](api.md)
+3. **Database Management**: Check [Database Migrations](database_migrations.md)
+4. **Deployment**: Follow the [Deployment Guide](deployment.md)
+5. **Maintenance**: Review [Backup & Recovery](backup_recovery.md) and [Maintenance Overview](maintenance/README.md)
+
+## Contributing to Project Documentation
+
+When contributing to project documentation:
+
+1. Follow the established structure and organization
+2. Use consistent formatting and style
+3. Include practical examples and code snippets
+4. Keep information up-to-date with code changes
+5. Add cross-references to related documentation
 
 ## Relationship to Other Documentation
 
-While this documentation is specific to this project, general Django patterns and best practices can be found in:
-- [Patterns](../patterns/README.md): General Django design patterns
-- [Best Practices](../best-practices/README.md): Best practices for Django development
-- [Tools](../tools/README.md): Development tools and utilities
+This documentation is related to:
 
-## Contributing
-
-When contributing to this documentation:
-1. Ensure the information is specific to this project
-2. Keep documentation up-to-date with code changes
-3. Include code examples and explanations
-4. Add cross-references to related documentation 
+- [Best Practices](../best-practices/README.md): Development standards and practices
+- [Patterns](../patterns/README.md): Design patterns used in the project
+- [Getting Started](../getting-started/README.md): Initial setup and configuration 
