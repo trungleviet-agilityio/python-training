@@ -1,40 +1,60 @@
 # Django Best Practices
 
-This directory contains documentation on best practices for Django development. These guidelines help ensure code quality, maintainability, and performance.
+This directory contains comprehensive guidelines and best practices for Django development.
 
-## Best Practice Categories
+## Contents
 
-### Testing
-- [testing.md](testing.md) - Best practices for testing Django applications, including unit tests, integration tests, and test-driven development.
+### Version Control
+- [Git Conventions](version-control/git.md) - Commit message format, branch naming, and Git etiquette
+- [Git Workflow](version-control/git-workflow.md) - Branching strategy and workflow guidelines
+- [GitHub Actions](version-control/github-actions.md) - Automated workflows and GitHub Actions
 
-### Security
-- [security.md](security.md) - Best practices for securing Django applications, including authentication, authorization, and data protection.
+### Code Quality
+- [Project Structure](code-quality/structure.md) - Directory organization and module design
+- [Testing](code-quality/testing.md) - Testing strategies and patterns
+- [Security](code-quality/security.md) - Security best practices
+- [Performance](code-quality/performance.md) - Performance optimization
 
-### Performance
-- [performance.md](performance.md) - Best practices for optimizing Django application performance, including database optimization, caching, and code efficiency.
+### Development
+- [Development Workflow](development/workflow.md) - Development process and practices
+- [Code Review](development/review.md) - Code review guidelines and process
 
-### Project Structure
-- [project-structure.md](project-structure.md) - Best practices for organizing Django projects, including directory structure, app organization, and code organization.
+## Best Practices Overview
 
-## How to Use These Best Practices
+### Version Control
+- Follow consistent commit message format
+- Use meaningful branch names
+- Maintain clean Git history
+- Implement automated workflows
+- Follow code review guidelines
 
-1. Review the best practices relevant to your current development task
-2. Implement the best practices in your code
-3. Regularly review and update your code to ensure it follows best practices
-4. Share best practices with your team
+### Code Quality
+- Write clean, maintainable code
+- Follow Django's design philosophy
+- Implement comprehensive testing
+- Ensure security best practices
+- Optimize for performance
 
-## Best Practice Implementation Guidelines
+### Development Process
+- Use feature branches
+- Write meaningful commit messages
+- Perform thorough code reviews
+- Maintain documentation
+- Follow testing requirements
 
-When implementing these best practices:
+## Contributing
 
-1. Understand the rationale behind each best practice
-2. Adapt best practices to fit your specific requirements
-3. Document any deviations from best practices
-4. Regularly review and update your implementation
+When adding new best practices:
+
+1. Create a new markdown file in the appropriate subdirectory
+2. Follow the established documentation structure
+3. Include practical examples
+4. Add cross-references to related documentation
+5. Keep guidelines clear and actionable
 
 ## Resources
 
-- [Django Documentation](https://docs.djangoproject.com/)
-- [Django Best Practices](https://docs.djangoproject.com/en/stable/misc/design-philosophies/)
+- [Django Coding Style](https://docs.djangoproject.com/en/stable/internals/contributing/writing-code/coding-style/)
+- [Python Style Guide](https://www.python.org/dev/peps/pep-0008/)
 - [Django Security Documentation](https://docs.djangoproject.com/en/stable/topics/security/)
 - [Django Performance Documentation](https://docs.djangoproject.com/en/stable/topics/performance/) 

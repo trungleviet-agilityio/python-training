@@ -6,7 +6,7 @@ This guide covers the Git workflow process and commit verification setup for thi
 
 ### Branching Strategy
 - **main**: Always production-ready. Only merge tested, reviewed code here.
-- **feature/**: For new features or updates (see naming in git_conventions.md)
+- **feature/**: For new features or updates (see naming in [Git Conventions](git.md))
 - **bugfix/**: For bug fixes
 - **hotfix/**: For urgent production fixes
 
@@ -25,7 +25,7 @@ This guide covers the Git workflow process and commit verification setup for thi
 
 3. **Development Process**
    - Make changes in small, logical commits
-   - Follow commit message conventions (see git_conventions.md)
+   - Follow commit message conventions (see [Git Conventions](git.md))
    - Push changes regularly
    ```bash
    git push -u origin feature/your-feature
@@ -188,4 +188,12 @@ This guide covers the Git workflow process and commit verification setup for thi
 4. **Maintenance**
    - Delete merged branches
    - Update dependencies
-   - Monitor build status 
+   - Monitor build status
+
+## Related Documentation
+
+- [Git Conventions](git.md): Commit message format and branch naming conventions
+- [GitHub Actions](github-actions.md): Automated workflows and branch management
+- [Pre-commit Hooks](../../tools/pre_commit_hooks.md): Code quality checks and formatting
+- [Development Workflow](../development/workflow.md): Development process and practices
+- [Code Review Guide](../development/review.md): Code review guidelines and process 

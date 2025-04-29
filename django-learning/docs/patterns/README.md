@@ -1,33 +1,46 @@
-# Django Design Patterns
+# Design Patterns
 
-This directory contains documentation on common design patterns used in Django development. These patterns help organize code, improve maintainability, and follow best practices.
+This section contains documentation about common Django design patterns and their implementation in our project.
 
-## Pattern Categories
+## Contents
 
-### Model Patterns
-- [models.md](models.md) - Patterns for organizing data models, including Active Record, Model Mixins, Service Objects, Repository Pattern, Model Managers, and Model Signals.
+### Core Patterns
+- [Models](models.md): Database model patterns and best practices
+- [Views](views.md): View patterns and controller logic
+- [Forms](forms.md): Form handling and validation
+- [Templates](templates.md): Template patterns and inheritance
 
-### View Patterns
-- [views.md](views.md) - Patterns for handling HTTP requests and responses, including Function-Based Views, Class-Based Views, View Mixins, Template View Pattern, View Decorators, and View Composition.
+### Admin
+- [Admin](admin.md): Admin interface customization
 
-### Form Patterns
-- [forms.md](forms.md) - Patterns for handling form validation and processing, including Form Classes, Model Forms, Form Mixins, and Form Wizards.
+### Business Logic
+- [Business Logic](business-logic.md): Business logic organization and patterns
 
-### Template Patterns
-- [templates.md](templates.md) - Patterns for organizing templates, including Template Inheritance, Template Tags, Template Filters, and Template Context Processors.
+## How to Use This Documentation
 
-### Admin Patterns
-- [admin.md](admin.md) - Patterns for customizing the Django admin interface, including ModelAdmin, Admin Actions, Admin Forms, and Admin Views.
+1. **New to Django**: Start with [Models](models.md) and [Views](views.md)
+2. **Form Development**: Refer to [Forms](forms.md)
+3. **Template Development**: Check [Templates](templates.md)
+4. **Admin Customization**: Follow [Admin](admin.md)
+5. **Business Logic**: Review [Business Logic](business-logic.md)
 
-### Business Logic Patterns
-- [business-logic.md](business-logic.md) - Patterns for organizing business logic, including Service Layer, Command Pattern, Strategy Pattern, and Observer Pattern.
+## Contributing to Patterns Documentation
 
-## How to Use These Patterns
+When contributing to patterns documentation:
 
-1. Start with the basic patterns (models, views, forms) to understand the fundamentals
-2. Explore more advanced patterns as your project grows
-3. Combine patterns to solve complex problems
-4. Adapt patterns to fit your specific requirements
+1. Follow the established structure and organization
+2. Use consistent formatting and style
+3. Include practical examples and code snippets
+4. Keep information up-to-date with code changes
+5. Add cross-references to related documentation
+
+## Relationship to Other Documentation
+
+This documentation is related to:
+
+- [Best Practices](../best-practices/README.md): Development standards and practices
+- [Project](../project/README.md): Project-specific implementation details
+- [Tools](../tools/README.md): Development tools and utilities
 
 ## Pattern Implementation Guidelines
 
