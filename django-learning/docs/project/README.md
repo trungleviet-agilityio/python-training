@@ -1,49 +1,60 @@
 # Project Documentation
 
-This directory contains documentation specific to this Django project, including architecture, business logic, data models, API design, deployment, and maintenance procedures.
+This directory contains documentation specific to this Django project, including architecture, API design, deployment, database migrations, backup/recovery, and maintenance procedures.
 
 ## Contents
 
-### [Architecture](./architecture/README.md)
+### Architecture
 
-Project architecture and design decisions, including:
+Project architecture and design decisions:
 - [Business Logic](./architecture/business-logic.md): Core business logic, model relationships, and business rules
 - [Data Model](./architecture/data-model.md): Entity Relationship Diagram (ERD) and data model details
-- [System Design](./architecture/system-design.md): System components and their interactions
 
-### [API](./api/README.md)
+### API
 
-API documentation, including:
+[API Documentation](./api.md) including:
 - API endpoints
 - Authentication
 - Serialization
 
-### [Deployment](./deployment/README.md)
+### Deployment
 
-Deployment documentation, including:
+[Deployment Documentation](./deployment.md) including:
 - Production deployment
 - Scaling strategies
 
-### [Maintenance](./maintenance/README.md)
+### Database
 
-Maintenance documentation, including:
+[Database Migrations](./database_migrations.md) including:
+- Migration procedures
+- Data migration strategies
+
+### Backup and Recovery
+
+[Backup and Recovery](./backup_recovery.md) including:
 - Backup procedures
+- Recovery strategies
+
+### Maintenance
+
+[Maintenance Procedures](./maintenance/README.md) including:
 - Monitoring and alerts
+- Regular maintenance tasks
 
 ## How to Use This Documentation
 
 1. Start with the [Architecture](./architecture/README.md) section to understand the project's design
 2. Review the [Business Logic](./architecture/business-logic.md) to understand the core requirements
 3. Explore the [Data Model](./architecture/data-model.md) to understand the data structure
-4. Refer to the [API](./api/README.md) section for integration details
-5. Use the [Deployment](./deployment/README.md) and [Maintenance](./maintenance/README.md) sections for operational guidance
+4. Refer to the [API](./api.md) section for integration details
+5. Use the [Deployment](./deployment.md) and [Maintenance](./maintenance/README.md) sections for operational guidance
 
-## Relationship to Knowledge Base
+## Relationship to Other Documentation
 
-While this documentation is specific to this project, the general Django patterns and best practices can be found in the `../knowledge/` directory. The knowledge base contains:
-- General Django design patterns
-- Best practices for Django development
-- Development tools and utilities
+While this documentation is specific to this project, general Django patterns and best practices can be found in:
+- [Patterns](../patterns/README.md): General Django design patterns
+- [Best Practices](../best-practices/README.md): Best practices for Django development
+- [Tools](../tools/README.md): Development tools and utilities
 
 ## Contributing
 

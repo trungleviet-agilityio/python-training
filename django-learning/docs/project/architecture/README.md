@@ -1,6 +1,6 @@
 # Project Architecture
 
-This directory contains documentation related to the architecture of this Django project, including business logic, data models, and system design.
+This directory contains documentation related to the architecture of this Django project, including business logic and data models.
 
 ## Contents
 
@@ -19,14 +19,6 @@ Contains the Entity Relationship Diagram (ERD) and detailed descriptions of the 
 - Core entities and their attributes
 - Relationships between entities
 - Data types and constraints
-
-### [System Design](./system-design.md)
-
-Outlines the system design, components, and their interactions, including:
-- System architecture
-- Component interactions
-- Data flow
-- Deployment architecture
 
 ## Architecture Overview
 
@@ -52,6 +44,8 @@ The application follows a layered architecture with clear separation of concerns
 - **Frontend**: HTML, CSS, JavaScript
 - **Deployment**: Docker, Nginx, Gunicorn
 
-## Relationship to Knowledge Base
+## Relationship to Other Documentation
 
-While this documentation is specific to this project's architecture, general Django architecture patterns and best practices can be found in the `../../knowledge/patterns/` directory. 
+While this documentation is specific to this project's architecture, general Django architecture patterns and best practices can be found in:
+- [Patterns](../../patterns/README.md): General Django design patterns
+- [Best Practices](../../best-practices/README.md): Best practices for Django development 

@@ -150,74 +150,9 @@ This change affects the following views:
 - `test/user-registration`
 - `hotfix/security-patch`
 
-## Pre-commit Hook Standards
+## Pre-commit Hooks
 
-### Required Hooks
-
-1. **Code Formatting**
-   - black (Python)
-   - isort (Python imports)
-   - prettier (JavaScript/TypeScript)
-
-2. **Linting**
-   - flake8
-   - eslint
-   - mypy (type checking)
-
-3. **Security**
-   - bandit
-   - detect-secrets
-
-4. **General**
-   - trailing-whitespace
-   - end-of-file-fixer
-   - check-yaml
-   - check-added-large-files
-
-### Configuration
-
-```yaml
-# .pre-commit-config.yaml
-repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
-    hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
-      - id: check-yaml
-      - id: check-added-large-files
-
-  - repo: https://github.com/psf/black
-    rev: 23.3.0
-    hooks:
-      - id: black
-
-  - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
-    hooks:
-      - id: isort
-
-  - repo: https://github.com/pycqa/flake8
-    rev: 6.0.0
-    hooks:
-      - id: flake8
-```
-
-### Hook Management
-
-```bash
-# Install hooks
-pre-commit install
-
-# Run on all files
-pre-commit run --all-files
-
-# Run specific hook
-pre-commit run black --all-files
-
-# Skip hooks temporarily
-git commit -m "message" --no-verify
-```
+For information about pre-commit hooks, including configuration, required hooks, and best practices, please refer to the [Pre-commit Hooks](../tools/pre_commit_hooks.md) documentation.
 
 ## Code Review Standards
 
