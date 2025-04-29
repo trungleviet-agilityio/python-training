@@ -121,276 +121,154 @@ This change affects the following views:
 - PasswordChangeView
 ```
 
-## Step-by-Step Git Workflow
+## Branch Naming Conventions
 
-### 1. Setting Up Your Local Environment
-
-#### Configure Git for This Repository
-
-```bash
-# Set your name and email for this repository only
-git config user.name "Your Name"
-git config user.email "your.email@example.com"
-
-# Verify your configuration
-git config --local --list
+### Format
+```
+<type>/<description>
 ```
 
-#### Install Pre-commit Hooks
+### Types
+- **feature**: New feature development
+- **bugfix**: Bug fixes
+- **hotfix**: Urgent fixes for production issues
+- **docs**: Documentation updates
+- **refactor**: Code refactoring
+- **test**: Test additions or modifications
+- **chore**: Maintenance tasks
+
+### Description
+- Use lowercase letters and hyphens
+- Be brief but descriptive
+- Include issue number if applicable
+
+### Examples
+- `feature/user-authentication`
+- `bugfix/login-validation`
+- `docs/api-endpoints`
+- `refactor/auth-middleware`
+- `test/user-registration`
+- `hotfix/security-patch`
+
+## Pre-commit Hook Standards
+
+### Required Hooks
+
+1. **Code Formatting**
+   - black (Python)
+   - isort (Python imports)
+   - prettier (JavaScript/TypeScript)
+
+2. **Linting**
+   - flake8
+   - eslint
+   - mypy (type checking)
+
+3. **Security**
+   - bandit
+   - detect-secrets
+
+4. **General**
+   - trailing-whitespace
+   - end-of-file-fixer
+   - check-yaml
+   - check-added-large-files
+
+### Configuration
+
+```yaml
+# .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+```
+
+### Hook Management
 
 ```bash
-# Install pre-commit
-pip install pre-commit
-
-# Install the pre-commit hooks
+# Install hooks
 pre-commit install
 
-# Run pre-commit on all files
-pre-commit run --all-files
-```
-
-### 2. Starting a New Feature
-
-#### Create a Feature Branch
-
-```bash
-# Make sure you're on the main development branch
-git checkout develop
-
-# Pull the latest changes
-git pull origin develop
-
-# Create and switch to a new feature branch
-git checkout -b feature/user-authentication
-
-# Verify you're on the new branch
-git branch
-```
-
-### 3. Making Changes
-
-#### Stage Your Changes
-
-```bash
-# Check the status of your changes
-git status
-
-# Add specific files
-git add path/to/file1.py path/to/file2.py
-
-# Add all changes in a directory
-git add path/to/directory/
-
-# Add all changes
-git add .
-```
-
-#### Commit Your Changes
-
-```bash
-# Commit with a message following the convention
-git commit -m "feat(auth): add user registration form"
-
-# For more detailed commits, use the editor
-git commit
-```
-
-When using `git commit` without `-m`, your default editor will open. Enter your commit message following the convention:
-
-```
-feat(auth): add user registration form
-
-Implement a user registration form with the following features:
-- Email validation
-- Password strength requirements
-- Terms of service acceptance
-- CSRF protection
-
-This form will be displayed at /register/ and will create a new user account
-upon successful submission.
-```
-
-### 4. Pushing Your Changes
-
-```bash
-# Push your branch to the remote repository
-git push -u origin feature/user-authentication
-```
-
-### 5. Creating a Pull Request
-
-1. Go to the GitHub repository
-2. Click on "Pull requests"
-3. Click "New pull request"
-4. Select your feature branch as the compare branch
-5. Fill in the PR template with details about your changes
-6. Submit the pull request
-
-### 6. Addressing Review Comments
-
-```bash
-# Make the requested changes
-# Stage your changes
-git add .
-
-# Commit your changes
-git commit -m "fix(auth): address review comments on registration form"
-
-# Push your changes
-git push origin feature/user-authentication
-```
-
-### 7. Merging Your Changes
-
-Once your pull request is approved:
-
-1. Squash and merge your pull request on GitHub
-2. Delete the feature branch
-3. Update your local repository:
-
-```bash
-# Switch to the develop branch
-git checkout develop
-
-# Pull the latest changes
-git pull origin develop
-
-# Delete your local feature branch
-git branch -d feature/user-authentication
-```
-
-## Pre-commit Hooks
-
-### What Are Pre-commit Hooks?
-
-Pre-commit hooks are scripts that run automatically before a commit is created. They can check your code for style issues, run tests, and ensure that your code meets certain standards.
-
-### Available Hooks in This Project
-
-1. **commit-msg**: Validates commit message format
-2. **trailing-whitespace**: Removes trailing whitespace
-3. **end-of-file-fixer**: Ensures files end with a newline
-4. **check-yaml**: Validates YAML files
-5. **check-added-large-files**: Prevents large files from being committed
-6. **check-ast**: Ensures Python files are syntactically valid
-7. **check-json**: Validates JSON files
-8. **check-merge-conflict**: Prevents merge conflict markers from being committed
-9. **detect-private-key**: Prevents private keys from being committed
-10. **black**: Formats Python code
-11. **isort**: Sorts Python imports
-12. **flake8**: Lints Python code
-13. **mypy**: Type checks Python code
-14. **bandit**: Checks for security issues
-15. **pyupgrade**: Upgrades Python syntax
-
-### Running Pre-commit Hooks Manually
-
-```bash
-# Run pre-commit on all files
+# Run on all files
 pre-commit run --all-files
 
-# Run pre-commit on specific files
-pre-commit run --files path/to/file1.py path/to/file2.py
-
-# Run a specific hook
+# Run specific hook
 pre-commit run black --all-files
+
+# Skip hooks temporarily
+git commit -m "message" --no-verify
 ```
 
-### Skipping Pre-commit Hooks
+## Code Review Standards
 
-In rare cases, you might need to skip pre-commit hooks:
+### Pull Request Guidelines
 
-```bash
-# Skip pre-commit hooks for a single commit
-git commit -m "feat(auth): add user registration form" --no-verify
-```
+1. **Title Format**
+   - Follow commit message format
+   - Include ticket number if applicable
 
-## Best Practices
+2. **Description Template**
+   ```markdown
+   ## Changes
+   - Detailed list of changes
+   
+   ## Testing
+   - Testing steps performed
+   
+   ## Screenshots
+   - If applicable
+   
+   ## Checklist
+   - [ ] Tests added/updated
+   - [ ] Documentation updated
+   - [ ] Pre-commit hooks pass
+   ```
 
-1. **Keep Commits Focused**
-   - Each commit should represent a single logical change
-   - Avoid mixing unrelated changes in a single commit
+3. **Review Process**
+   - At least one approval required
+   - All comments must be resolved
+   - CI checks must pass
+   - Commits must be signed
 
-2. **Write Clear Messages**
-   - Be specific about what changed and why
-   - Use present tense and imperative mood
-   - Reference issue numbers when applicable
+### Review Checklist
 
-3. **Review Before Committing**
-   - Check that your commit message follows the convention
-   - Ensure all changes are intentional
-   - Verify that tests pass
+1. **Code Quality**
+   - Follows project style guide
+   - No duplicate code
+   - Proper error handling
+   - Efficient algorithms
 
-4. **Branch Naming**
-   - Use descriptive branch names that reflect the purpose
-   - Format: `type/description`
-   - Examples:
-     - `feature/user-authentication`
-     - `bugfix/login-error`
-     - `docs/api-documentation`
+2. **Testing**
+   - Unit tests added/updated
+   - Integration tests if needed
+   - Edge cases covered
 
-5. **Pull Request Workflow**
-   - Create feature branches from the main development branch
-   - Keep branches up to date with the main branch
-   - Squash commits when merging to maintain a clean history
+3. **Security**
+   - No sensitive data exposed
+   - Input validation
+   - Proper authentication/authorization
 
-## Git Workflow
-
-1. **Feature Development**
-   - Create a feature branch from the main development branch
-   - Make small, focused commits
-   - Push changes and create a pull request
-
-2. **Code Review**
-   - Request reviews from team members
-   - Address feedback and make necessary changes
-   - Ensure all checks pass
-
-3. **Merging**
-   - Squash and merge feature branches
-   - Delete feature branches after merging
-   - Update issue status
-
-## Troubleshooting
-
-### Common Issues
-
-#### Pre-commit Hooks Not Running
-
-```bash
-# Reinstall pre-commit hooks
-pre-commit uninstall
-pre-commit install
-```
-
-#### Commit Message Validation Failing
-
-Make sure your commit message follows the format:
-```
-<type>(<scope>): <subject>
-```
-
-For example:
-```
-feat(auth): add user registration form
-```
-
-#### Git Configuration Issues
-
-```bash
-# Check your Git configuration
-git config --list
-
-# Reset your Git configuration for this repository
-git config --local --unset user.name
-git config --local --unset user.email
-git config --local user.name "Your Name"
-git config --local user.email "your.email@example.com"
-```
-
-## Resources
-
-- [Conventional Commits](https://www.conventionalcommits.org/)
-- [Angular Commit Message Guidelines](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#-commit-message-format)
-- [GitHub Flow](https://guides.github.com/introduction/flow/)
-- [Pre-commit Documentation](https://pre-commit.com/) 
+4. **Documentation**
+   - Code comments where needed
+   - API documentation updated
+   - README updated if needed
