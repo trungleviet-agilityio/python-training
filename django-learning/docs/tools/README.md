@@ -1,30 +1,41 @@
-# Django Development Tools
+# Development Tools
 
-This directory contains documentation on tools and utilities for Django development. These tools help improve productivity, debugging, and development workflow.
+This directory contains documentation for various development tools used in our Django project.
 
-## Tool Categories
+## Available Tools
+
+### Package Management
+- [UV](uv.md) - Fast Python package installer and resolver
+
+### Code Quality and Linting
+- [Pre-commit Hooks](pre_commit_hooks.md) - Automated code quality checks before commits
+- [Django Tools](django_tools.md) - Essential tools and utilities for Django development
 
 ### Debugging
-- [debugging.md](debugging.md) - Tools and techniques for debugging Django applications, including Django Debug Toolbar, pdb, and logging.
+- [Debugging Tools](debugging.md) - Tools and techniques for debugging Django applications
 
-### Django Tools
-- [django_tools.md](django_tools.md) - Django-specific tools and utilities, including management commands, shell scripts, and development utilities.
+## Getting Started
 
-## How to Use These Tools
+1. Review the [Pre-commit Hooks](pre_commit_hooks.md) documentation to set up automated code quality checks
+2. Install the recommended VS Code extensions
+3. Configure your development environment according to the tool-specific documentation
 
-1. Review the tools relevant to your current development task
-2. Install and configure the tools as needed
-3. Use the tools to improve your development workflow
-4. Share tool knowledge with your team
+## Best Practices
 
-## Tool Implementation Guidelines
+- Always run pre-commit hooks before committing code
+- Keep tools and dependencies up to date
+- Follow the configuration guidelines for each tool
+- Report any issues or suggest improvements to the tool configurations
 
-When using these tools:
+## Contributing
 
-1. Understand the purpose and capabilities of each tool
-2. Configure tools appropriately for your environment
-3. Document any custom configurations
-4. Regularly update tools to the latest versions
+When adding new tools or updating existing ones:
+
+1. Create a new markdown file in this directory
+2. Update this README to include a reference to the new documentation
+3. Follow the existing documentation format
+4. Include installation, configuration, and usage instructions
+5. Add troubleshooting tips and common issues
 
 ## Resources
 

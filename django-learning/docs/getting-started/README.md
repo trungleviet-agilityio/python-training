@@ -7,12 +7,14 @@ This directory contains documentation to help you get started with the Django pr
 - [Installation](./installation.md): Instructions for installing the project
 - [Configuration](./configuration.md): Guide for configuring the project
 - [Development Setup](./development-setup.md): Instructions for setting up a development environment
+- [SSH Setup](./ssh-setup.md): Guide for setting up SSH for secure connections
+- [Troubleshooting Guide](./troubleshooting.md): Common issues and solutions
 
 ## Quick Start
 
 1. Install the project dependencies:
    ```bash
-   pip install -r requirements.txt
+   uv pip install -r requirements/dev.txt
    ```
 
 2. Configure the project:
@@ -23,17 +25,17 @@ This directory contains documentation to help you get started with the Django pr
 
 3. Run migrations:
    ```bash
-   python manage.py migrate
+   python src/manage.py migrate
    ```
 
 4. Create a superuser:
    ```bash
-   python manage.py createsuperuser
+   python src/manage.py createsuperuser
    ```
 
 5. Run the development server:
    ```bash
-   python manage.py runserver
+   python src/manage.py runserver
    ```
 
 6. Visit http://localhost:8000/ in your browser
@@ -62,13 +64,14 @@ This directory contains documentation to help you get started with the Django pr
 
 Run the tests with:
 ```bash
-python manage.py test
+pytest
 ```
 
-## Documentation
+## Next Steps
 
-- [Architecture](../architecture/README.md): Overview of the project architecture
+After getting started with the project, you may want to explore:
+
 - [Patterns](../patterns/README.md): Design patterns used in the project
-- [API](../api/README.md): API documentation
-- [Deployment](../deployment/README.md): Deployment instructions
-- [Maintenance](../maintenance/README.md): Maintenance procedures 
+- [Best Practices](../best-practices/README.md): Development guidelines and best practices
+- [Tools](../tools/README.md): Development tools and utilities
+- [Project Documentation](../project/README.md): Project-specific documentation 

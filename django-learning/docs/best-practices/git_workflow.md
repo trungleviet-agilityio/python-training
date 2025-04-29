@@ -1,96 +1,191 @@
 # Git Workflow & Commit Verification Guide
 
-This guide covers a professional Git workflow for teams and how to optionally enable SSH commit signing for verified commits on GitHub.
-
----
+This guide covers the Git workflow process and commit verification setup for this project.
 
 ## 1. Professional Git Workflow
 
 ### Branching Strategy
 - **main**: Always production-ready. Only merge tested, reviewed code here.
-- **feature/your-feature-name**: For new features or updates.
-- **bugfix/your-bug-description**: For bug fixes.
-- **docs/your-docs-update**: For documentation changes.
+- **feature/**: For new features or updates (see naming in git_conventions.md)
+- **bugfix/**: For bug fixes
+- **hotfix/**: For urgent production fixes
 
-### Typical Workflow
+### Development Workflow
+
 1. **Start from main**
    ```bash
    git checkout main
    git pull origin main
    ```
-2. **Create a new branch for your work**
+
+2. **Create Feature Branch**
    ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. **Work and commit locally**
-   - Make changes, commit often with clear messages.
-4. **Push your branch**
-   ```bash
-   git push -u origin feature/your-feature-name
-   ```
-5. **Open a Pull Request (PR)**
-   - Go to GitHub, open a PR from your branch to `main`.
-   - Request reviews, address feedback.
-6. **Merge after approval**
-   - Only merge to `main` after review and all checks pass.
-7. **Delete the feature branch after merging**
-   ```bash
-   git branch -d feature/your-feature-name
-   git push origin --delete feature/your-feature-name
+   git checkout -b feature/your-feature
    ```
 
----
-
-## 2. Commit Verification (Optional, Recommended for Teams)
-
-### Why verify commits?
-- Verified commits prove that the changes came from you, increasing trust and security in your repository.
-
-### SSH Key Signing (Recommended for Simplicity)
-
-#### Prerequisites
-- Git version 2.34 or newer
-- SSH key already set up for GitHub (see `docs/getting-started/ssh-setup.md`)
-
-#### Enable SSH Commit Signing
-1. **Configure Git to use SSH for signing:**
+3. **Development Process**
+   - Make changes in small, logical commits
+   - Follow commit message conventions (see git_conventions.md)
+   - Push changes regularly
    ```bash
+   git push -u origin feature/your-feature
+   ```
+
+4. **Pull Request Process**
+   - Create PR on GitHub
+   - Request reviews
+   - Address feedback
+   - Ensure all checks pass
+
+5. **Merging**
+   - Squash and merge to main
+   - Delete feature branch
+   - Update local repository
+   ```bash
+   git checkout main
+   git pull origin main
+   git branch -d feature/your-feature
+   ```
+
+## 2. Commit Verification Setup
+
+### Why Required?
+- Ensures code authenticity
+- Prevents unauthorized commits
+- Maintains repository security
+- Required for all contributions
+
+### SSH Key Setup
+
+1. **Check/Create SSH Keys**
+   ```bash
+   # List existing keys
+   ls -la ~/.ssh/
+   
+   # Create if needed
+   ssh-keygen -t ed25519 -C "your.email@example.com"
+   ```
+
+2. **Configure Git**
+   ```bash
+   # SSH signing setup
    git config --local gpg.format ssh
-   git config --local user.signingkey ~/.ssh/id_ed25519_work.pub
+   git config --local user.signingkey ~/.ssh/id_ed25519.pub
    git config --local commit.gpgsign true
+   git config --local gpg.ssh.allowedsignersfile ~/.ssh/allowed_signers
+   
+   # Create allowed signers file
+   echo "your.email@example.com $(cat ~/.ssh/id_ed25519.pub)" > ~/.ssh/allowed_signers
+   chmod 644 ~/.ssh/allowed_signers
    ```
-2. **Make a signed commit:**
+
+3. **GitHub Configuration**
+   - Go to GitHub Settings > SSH Keys
+   - Add new SSH key
+   - Select "Signing Key" type
+   - Paste your public key
+   - Save key
+
+4. **Verify Setup**
    ```bash
-   git commit -S -m "your commit message"
+   # Test commit signing
+   git commit --allow-empty -S -m "test: verify signing"
+   git log --show-signature -1
    ```
-3. **Push as usual:**
+
+### Troubleshooting
+
+1. **Invalid Key Errors**
    ```bash
-   git push
+   # Fix allowed_signers format
+   echo "your.email@example.com $(cat ~/.ssh/id_ed25519.pub)" > ~/.ssh/allowed_signers
+   
+   # Fix line endings
+   sed -i 's/\r$//' ~/.ssh/allowed_signers
    ```
-4. **Check on GitHub:**
-   - Your commits should show as "Verified".
 
-#### References
-- [GitHub Docs: Sign commits with SSH](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits-with-ssh-keys)
-- [GitHub Docs: About commit signature verification](https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification)
+2. **Permission Issues**
+   ```bash
+   # Set correct permissions
+   chmod 600 ~/.ssh/id_ed25519
+   chmod 644 ~/.ssh/id_ed25519.pub
+   chmod 644 ~/.ssh/allowed_signers
+   ```
 
-### GPG Commit Signing (Advanced, Optional)
-- See [GitHub Docs: Sign commits with GPG](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits)
+3. **Pre-commit Conflicts**
+   ```bash
+   # Temporary skip
+   git commit --no-verify -S -m "message"
+   ```
 
----
+4. **Verification Check**
+   ```bash
+   # Check configuration
+   git config --local --list | grep -E "gpg|sign|user"
+   
+   # Expected output:
+   # gpg.format=ssh
+   # user.signingkey=~/.ssh/id_ed25519.pub
+   # commit.gpgsign=true
+   ```
 
-## 3. Best Practices
-- Use local Git config for user/email to avoid conflicts:
-  ```bash
-  git config --local user.name "Your Name"
-  git config --local user.email "your.email@company.com"
-  ```
-- Keep commits focused and messages clear.
-- Always branch from `main` and use PRs for merging.
-- Delete feature branches after merging to keep the repo clean.
+## 3. CI/CD Integration
 
----
+### Automated Checks
+- Commit signature verification
+- Pre-commit hook validation
+- Test suite execution
+- Code quality metrics
 
-## 4. Troubleshooting
-- If commit signing fails, check your SSH key setup and Git version.
-- For more help, see the official GitHub documentation linked above. 
+### Required Status Checks
+- All commits must be signed
+- CI pipeline must pass
+- Code review approved
+- No merge conflicts
+
+## 4. Emergency Procedures
+
+### Hotfix Process
+1. Branch from main
+2. Fix critical issue
+3. Expedited review
+4. Deploy immediately
+5. Backport to development
+
+### Recovery Steps
+1. **Revert Bad Merge**
+   ```bash
+   git revert -m 1 <merge-commit>
+   ```
+
+2. **Fix Broken Build**
+   ```bash
+   git checkout -b hotfix/fix-build
+   # Make fixes
+   git push -u origin hotfix/fix-build
+   ```
+
+## 5. Best Practices
+
+1. **Regular Synchronization**
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git merge main
+   ```
+
+2. **Clean History**
+   - Squash related commits
+   - Write clear commit messages
+   - Keep changes focused
+
+3. **Security**
+   - Always sign commits
+   - Protect SSH keys
+   - Review access permissions
+
+4. **Maintenance**
+   - Delete merged branches
+   - Update dependencies
+   - Monitor build status 

@@ -7,11 +7,14 @@ This documentation provides comprehensive information about the Django 5 project
 ```
 docs/
 ├── README.md                  # This file - Overview of documentation
+│
 ├── getting-started/           # Getting started guides
 │   ├── README.md              # Introduction to getting started
 │   ├── installation.md        # Installation instructions
 │   ├── configuration.md       # Configuration guide
-│   └── development-setup.md   # Development environment setup
+│   ├── development-setup.md   # Development environment setup
+│   ├── ssh-setup.md           # SSH configuration guide
+│   └── troubleshooting.md     # Common issues and solutions
 │
 ├── patterns/                  # Design patterns for Django
 │   ├── README.md              # Patterns overview
@@ -27,22 +30,28 @@ docs/
 │   ├── testing.md             # Testing strategies and examples
 │   ├── security.md            # Security best practices
 │   ├── performance.md         # Performance optimization guides
-│   └── project-structure.md   # Project structure guidelines
+│   ├── project-structure.md   # Project structure guidelines
+│   ├── git_conventions.md     # Git commit conventions
+│   └── git_workflow.md        # Git workflow guidelines
 │
 ├── tools/                     # Development tools and utilities
 │   ├── README.md              # Tools overview
+│   ├── pre_commit_hooks.md    # Pre-commit hooks configuration
+│   ├── uv.md                  # UV package installer
 │   ├── debugging.md           # Debugging guide
 │   └── django_tools.md        # Django-specific tools
 │
-├── project/                   # Project-specific documentation
-│   ├── README.md              # Project overview
-│   ├── architecture.md        # Project architecture
-│   ├── data-model.md          # Data model and ERD
-│   ├── deployment.md          # Deployment guide
-│   ├── database_migrations.md # Database migration procedures
-│   └── backup_recovery.md     # Backup and recovery procedures
-│
-└── api.md                     # API documentation
+└── project/                   # Project-specific documentation
+    ├── README.md              # Project overview
+    ├── api.md                 # API documentation
+    ├── deployment.md          # Deployment guide
+    ├── database_migrations.md # Database migration procedures
+    ├── backup_recovery.md     # Backup and recovery procedures
+    ├── architecture/          # Architecture documentation
+    │   ├── README.md          # Architecture overview
+    │   ├── business-logic.md  # Business logic documentation
+    │   └── data-model.md      # Data model documentation
+    └── maintenance/           # Maintenance procedures
 ```
 
 ## Documentation Categories
@@ -54,16 +63,13 @@ The `getting-started/` directory provides guides for setting up and running the 
 The `patterns/` directory contains information about Django design patterns, including models, views, forms, templates, admin, and business logic.
 
 ### 3. Best Practices
-The `best-practices/` directory contains guidelines for Django development, including testing, security, performance, and project structure.
+The `best-practices/` directory contains guidelines for Django development, including testing, security, performance, project structure, and Git workflows.
 
 ### 4. Tools
-The `tools/` directory contains information about development tools and utilities, including debugging and Django-specific tools.
+The `tools/` directory contains information about development tools and utilities, including pre-commit hooks, UV package installer, debugging, and Django-specific tools.
 
 ### 5. Project Documentation
-The `project/` directory contains documentation specific to this project, including architecture, data model, deployment, database migrations, and backup/recovery procedures.
-
-### 6. API Documentation
-The `api.md` file contains documentation for the project's API.
+The `project/` directory contains documentation specific to this project, including API documentation, architecture, deployment, database migrations, backup/recovery procedures, and maintenance.
 
 ## How to Use This Documentation
 
@@ -72,7 +78,6 @@ The `api.md` file contains documentation for the project's API.
 3. Explore the **Best Practices** section to learn about Django development guidelines
 4. Use the **Tools** section to learn about development tools and utilities
 5. Review the **Project Documentation** to understand the specific implementation
-6. Use the **API Documentation** to understand the project's API
 
 ## Learning Path
 
